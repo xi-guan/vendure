@@ -16,6 +16,10 @@ vi.mock('@uidotdev/usehooks', () => ({
     useCopyToClipboard: useCopyToClipboardMock,
 }));
 
+vi.mock('virtual:admin-api-schema', () => {
+    return import('../document-introspection/testing-utils.js').then(m => m.getMockSchemaInfo());
+});
+
 function registerBlock(
     id: string,
     order: 'before' | 'after' | 'replace',
