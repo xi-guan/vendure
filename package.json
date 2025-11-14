@@ -23,7 +23,7 @@
     "version": "npm i && npm run check-imports && npm run check-angular-versions && npm run build && npm run check-core-type-defs && npm run generate-changelog && git add CHANGELOG* && git add */version.ts",
     "test": "lerna run test --stream --no-bail",
     "e2e": "lerna run e2e --stream --no-bail",
-    "build": "lerna run build",
+    "build": "nx run-many -t build",
     "check-imports": "ts-node scripts/check-imports.ts",
     "check-core-type-defs": "ts-node scripts/check-core-type-defs.ts",
     "check-angular-versions": "ts-node scripts/check-angular-versions.ts",

@@ -31,6 +31,7 @@ jobs:
     codegen:
         uses: ./.github/workflows/codegen.yml
     build:
+        needs: codegen
         name: build
         runs-on: ubuntu-latest
         permissions:
