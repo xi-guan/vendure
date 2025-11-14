@@ -1,9 +1,13 @@
 import { CustomFieldConfig, CustomFields } from '@vendure/common/lib/generated-types';
 import { graphql } from 'gql.tada';
 import { DocumentNode, FieldNode, FragmentDefinitionNode, Kind, print } from 'graphql';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { addCustomFields, addCustomFieldsToFragment } from './add-custom-fields.js';
+
+vi.mock('virtual:admin-api-schema', () => {
+    return import('./testing-utils.js').then(m => m.getMockSchemaInfo());
+});
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 describe('addCustomFields()', () => {

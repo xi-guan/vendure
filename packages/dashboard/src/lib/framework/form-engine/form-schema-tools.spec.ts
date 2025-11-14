@@ -1,7 +1,11 @@
 import { FieldInfo } from '@/vdb/framework/document-introspection/get-document-structure.js';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { createFormSchemaFromFields, getZodTypeFromField } from './form-schema-tools.js';
+
+vi.mock('virtual:admin-api-schema', () => {
+    return import('../document-introspection/testing-utils.js').then(m => m.getMockSchemaInfo());
+});
 
 // Helper to create mock FieldInfo
 const createMockField = (
