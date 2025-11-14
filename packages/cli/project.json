@@ -13,6 +13,15 @@
       "outputs": ["{projectRoot}/dist"],
       "dependsOn": ["^build"]
     },
+    "ci": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run build",
+        "cwd": "packages/cli"
+      },
+      "outputs": ["{projectRoot}/dist"],
+      "dependsOn": ["^build"]
+    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {

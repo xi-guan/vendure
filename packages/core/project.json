@@ -19,6 +19,15 @@
       "outputs": ["{projectRoot}/dist"],
       "dependsOn": ["@vendure/common:build"]
     },
+    "ci": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run build",
+        "cwd": "packages/core"
+      },
+      "outputs": ["{projectRoot}/dist"],
+      "dependsOn": ["@vendure/common:build"]
+    },
     "watch": {
       "executor": "nx:run-commands",
       "options": {
