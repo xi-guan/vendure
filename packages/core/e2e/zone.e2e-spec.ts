@@ -332,11 +332,7 @@ const CREATE_FACET_WITH_VALUE = gql`
 // A new fragment to include the custom fields
 const ZONE_CUSTOM_FIELDS_FRAGMENT = gql`
     fragment ZoneCustomFields on Zone {
-        customFields {
-            relatedFacet {
-                id
-            }
-        }
+        customFields
     }
 `;
 
