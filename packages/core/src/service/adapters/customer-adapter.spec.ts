@@ -12,6 +12,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
 import { Test, TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { PrismaService } from '../../connection/prisma.service';
 import { TransactionalConnection } from '../../connection/transactional-connection';
@@ -35,6 +36,7 @@ describe('Customer ORM Adapters', () => {
                     useValue: {
                         customer: {
                             findUnique: vi.fn(),
+                            findFirst: vi.fn(),
                             findMany: vi.fn(),
                             create: vi.fn(),
                             update: vi.fn(),
