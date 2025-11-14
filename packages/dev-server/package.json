@@ -5,6 +5,7 @@
     "license": "GPL-3.0-or-later",
     "private": true,
     "scripts": {
+        "build": "echo 'No build needed for dev-server'",
         "populate": "node -r ts-node/register -r dotenv/config populate-dev-server.ts",
         "dev:server": "node -r ts-node/register -r dotenv/config -r tsconfig-paths/register index.ts",
         "dev:server:instrumented": "IS_INSTRUMENTED=true node -r ts-node/register -r dotenv/config -r tsconfig-paths/register -r ./instrumentation.ts index.ts",

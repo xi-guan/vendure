@@ -32,6 +32,20 @@ export default ({ mode }: { mode: string }) => {
                 vendureConfigPath: pathToFileURL(vendureConfigPath),
                 api: { host: adminApiHost, port: adminApiPort },
                 tempCompilationDir: path.resolve(__dirname, './.temp'),
+                disablePlugins: {
+                    // Disable plugins that might cause issues in test environment
+                    ...(process.env.VITEST
+                        ? {
+                              react: true,
+                              lingui: true,
+                              tanstackRouter: true,
+                              adminApiSchema: true,
+                              dashboardMetadata: true,
+                              gqlTada: true,
+                              hmr: true,
+                          }
+                        : {}),
+                },
             }) as any,
         ],
     });
