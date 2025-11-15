@@ -81,12 +81,11 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
         };
         // Ensure maxRetriesPerRequest is set to null as required by BullMQ
         const baseConnectionOptions = options.connection ??
-            ({ host: 'localhost', port: 6379, maxRetriesPerRequest: null, lazyConnect: true } as RedisOptions);
+            ({ host: 'localhost', port: 6379, maxRetriesPerRequest: null } as RedisOptions);
 
         // Create a clean config object with maxRetriesPerRequest: null for creating new connections
-        // Preserve all original options including lazyConnect to prevent premature connection attempts
         this.redisConfig = baseConnectionOptions instanceof EventEmitter
-            ? { maxRetriesPerRequest: null, lazyConnect: true } as RedisOptions
+            ? { maxRetriesPerRequest: null } as RedisOptions
             : { ...(baseConnectionOptions as any), maxRetriesPerRequest: null };
 
         this.connectionOptions = baseConnectionOptions instanceof EventEmitter
@@ -182,8 +181,10 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
         if (this.connectionOptions instanceof EventEmitter && 'options' in this.connectionOptions) {
             const redisInstance = this.connectionOptions as Redis;
             const existingOptions = (redisInstance as any).options || {};
+            // Remove lazyConnect to ensure new connections are established immediately
+            const { lazyConnect, ...cleanOptions } = existingOptions;
             this.cancellationSub = new Redis({
-                ...existingOptions,
+                ...cleanOptions,
                 maxRetriesPerRequest: null,
             });
         } else {

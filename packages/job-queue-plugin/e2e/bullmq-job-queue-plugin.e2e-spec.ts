@@ -22,7 +22,6 @@ describe('BullMQJobQueuePlugin', () => {
     const redisConnection: any = new Redis({
         host: redisHost,
         port: redisPort,
-        lazyConnect: true,
         maxRetriesPerRequest: null,
         retryStrategy: (times: number) => {
             // Retry connection with exponential backoff, max 3 seconds
@@ -51,8 +50,6 @@ describe('BullMQJobQueuePlugin', () => {
     );
 
     beforeAll(async () => {
-        // Wait for Redis connection to be established before initializing server
-        await redisConnection.connect();
         await server.init({
             initialData,
             productsCsvPath: path.join(__dirname, 'fixtures/e2e-products-minimal.csv'),

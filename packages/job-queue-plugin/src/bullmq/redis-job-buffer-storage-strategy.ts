@@ -17,8 +17,10 @@ export class RedisJobBufferStorageStrategy implements JobBufferStorageStrategy {
             this.redis = options.connection;
         } else {
             // Ensure proper connection options for BullMQ compatibility
+            // Remove lazyConnect to ensure connections are established immediately
+            const { lazyConnect, ...baseOptions } = options.connection as RedisOptions;
             const connectionOptions = {
-                ...(options.connection as RedisOptions),
+                ...baseOptions,
                 maxRetriesPerRequest: null,
             };
             this.redis = new Redis(connectionOptions);
