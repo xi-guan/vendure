@@ -27,14 +27,6 @@
         "cwd": "packages/cli"
       }
     },
-    "e2e": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "vitest --run",
-        "cwd": "packages/cli/e2e"
-      },
-      "dependsOn": ["build"]
-    },
     "ci": {
       "executor": "nx:run-commands",
       "options": {
