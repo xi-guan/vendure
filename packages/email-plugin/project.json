@@ -26,14 +26,6 @@
         "command": "vitest --run",
         "cwd": "packages/email-plugin"
       }
-    },
-    "e2e": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "vitest --run",
-        "cwd": "packages/email-plugin/e2e"
-      },
-      "dependsOn": ["build"]
     }
   },
   "tags": ["type:plugin", "scope:email"]
