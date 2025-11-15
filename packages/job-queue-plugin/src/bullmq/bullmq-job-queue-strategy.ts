@@ -125,7 +125,8 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
             );
         }
 
-        this.queue = new Queue(QUEUE_NAME, { ...options.queueOptions, connection: this.redisConnection })
+        // Pass redisConfig (options) to BullMQ instead of the instance to ensure proper connection parameters
+        this.queue = new Queue(QUEUE_NAME, { ...options.queueOptions, connection: this.redisConfig })
             .on('error', (e: any) =>
                 Logger.error(`BullMQ Queue error: ${JSON.stringify(e.message)}`, loggerCtx, e.stack),
             )
@@ -332,10 +333,11 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
     ): Promise<void> {
         this.queueNameProcessFnMap.set(queueName, process);
         if (!this.worker) {
+            // Pass redisConfig (options) to BullMQ instead of the instance to ensure proper connection parameters
             const options: WorkerOptions = {
                 concurrency: DEFAULT_CONCURRENCY,
                 ...this.options.workerOptions,
-                connection: this.redisConnection,
+                connection: this.redisConfig,
             };
             this.worker = new Worker(QUEUE_NAME, this.workerProcessor, options)
                 .on('error', e => Logger.error(`BullMQ Worker error: ${e.message}`, loggerCtx, e.stack))
