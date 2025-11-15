@@ -1,8 +1,11 @@
 import path from 'path';
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
+// @ts-ignore
+import { getPackageDir } from './get-package-dir.js';
 
 export default defineConfig({
+    root: getPackageDir(),
     test: {
         include: ['**/*.e2e-spec.ts'],
         /**
@@ -14,7 +17,7 @@ export default defineConfig({
         // singleThread: true,
         // reporters: ['verbose'],
         typecheck: {
-            tsconfig: path.join(__dirname, 'tsconfig.e2e.json'),
+            tsconfig: path.join(getPackageDir(), 'config/tsconfig.e2e.json'),
         },
         // In jobs-queue.e2e-spec.ts, we use `it.only()` for sqljs, so we need this
         // set to true to avoid failures in CI.
