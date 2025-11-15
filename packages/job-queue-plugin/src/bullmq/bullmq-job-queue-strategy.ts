@@ -84,8 +84,9 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
             ({ host: 'localhost', port: 6379, maxRetriesPerRequest: null } as RedisOptions);
 
         // Create a clean config object with maxRetriesPerRequest: null for creating new connections
+        // When an existing Redis instance is passed, extract its connection options
         this.redisConfig = baseConnectionOptions instanceof EventEmitter
-            ? { maxRetriesPerRequest: null } as RedisOptions
+            ? this.extractRedisOptions(baseConnectionOptions as Redis)
             : { ...(baseConnectionOptions as any), maxRetriesPerRequest: null };
 
         this.connectionOptions = baseConnectionOptions instanceof EventEmitter
@@ -483,6 +484,17 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
                 },
             );
         });
+    }
+
+    private extractRedisOptions(redisInstance: Redis): RedisOptions {
+        // Extract connection options from an existing Redis instance
+        const options = (redisInstance as any).options || {};
+        return {
+            host: options.host || 'localhost',
+            port: options.port || 6379,
+            ...options,
+            maxRetriesPerRequest: null,
+        };
     }
 
     private defineCustomLuaScripts() {
