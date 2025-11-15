@@ -110,11 +110,18 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
 
         const redisHealthIndicator = injector.get(RedisHealthIndicator);
         Logger.info('Checking Redis connection...', loggerCtx);
-        const health = await redisHealthIndicator.isHealthy('redis');
-        if (health.redis.status === 'down') {
-            Logger.error('Could not connect to Redis', loggerCtx);
-        } else {
-            Logger.info('Connected to Redis ✔', loggerCtx);
+        try {
+            const health = await redisHealthIndicator.isHealthy('redis');
+            if (health.redis.status === 'down') {
+                Logger.error('Could not connect to Redis', loggerCtx);
+            } else {
+                Logger.info('Connected to Redis ✔', loggerCtx);
+            }
+        } catch (error: any) {
+            Logger.warn(
+                `Redis connection check failed: ${error.message}. The plugin will continue to operate but may encounter issues if Redis is not available.`,
+                loggerCtx,
+            );
         }
 
         this.queue = new Queue(QUEUE_NAME, { ...options.queueOptions, connection: this.redisConnection })
