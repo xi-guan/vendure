@@ -15,6 +15,9 @@ export default defineConfig({
             tsconfig: path.join(__dirname, 'config/tsconfig.e2e.json'),
         },
         allowOnly: true,
+        env: {
+            PACKAGE: 'asset-server-plugin',
+        },
     },
     plugins: [
         // SWC required to support decorators used in test plugins
