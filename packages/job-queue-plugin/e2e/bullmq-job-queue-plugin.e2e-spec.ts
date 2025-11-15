@@ -22,6 +22,12 @@ describe('BullMQJobQueuePlugin', () => {
     const redisConnection: any = new Redis({
         host: redisHost,
         port: redisPort,
+        lazyConnect: true,
+        maxRetriesPerRequest: null,
+        retryStrategy: (times: number) => {
+            // Retry connection with exponential backoff, max 3 seconds
+            return Math.min(times * 100, 3000);
+        },
     });
 
     const { server, adminClient, shopClient } = createTestEnvironment(
@@ -45,6 +51,8 @@ describe('BullMQJobQueuePlugin', () => {
     );
 
     beforeAll(async () => {
+        // Wait for Redis connection to be established before initializing server
+        await redisConnection.connect();
         await server.init({
             initialData,
             productsCsvPath: path.join(__dirname, 'fixtures/e2e-products-minimal.csv'),
@@ -56,6 +64,8 @@ describe('BullMQJobQueuePlugin', () => {
     afterAll(async () => {
         await awaitRunningJobs(adminClient);
         await server.destroy();
+        // Properly close Redis connection
+        await redisConnection.quit();
         // redis.quit() creates a thread to close the connection.
         // We wait until all threads have been run once to ensure the connection closes.
         // See https://stackoverflow.com/a/54560610/772859
