@@ -1,8 +1,7 @@
 import path from 'path';
 import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
-// @ts-ignore
-import { getPackageDir } from './get-package-dir.js';
+import { getPackageDir } from './get-package-dir.mjs';
 
 export default defineConfig({
     root: getPackageDir(),
