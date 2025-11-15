@@ -97,6 +97,15 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
                 ? this.connectionOptions
                 : new Redis(this.connectionOptions);
 
+        // Attach error handler to prevent unhandled errors
+        this.redisConnection.on('error', (err: any) => {
+            Logger.error(
+                `Redis connection error: ${JSON.stringify(err.message)}`,
+                loggerCtx,
+                err.stack,
+            );
+        });
+
         this.defineCustomLuaScripts();
 
         const redisHealthIndicator = injector.get(RedisHealthIndicator);
@@ -162,6 +171,13 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
         // Subscription-mode Redis connection for the cancellation messages
         // Always use redisConfig (not connectionOptions) to ensure maxRetriesPerRequest is null
         this.cancellationSub = new Redis(this.redisConfig);
+        this.cancellationSub.on('error', (err: any) => {
+            Logger.error(
+                `Redis cancellation subscriber error: ${JSON.stringify(err.message)}`,
+                loggerCtx,
+                err.stack,
+            );
+        });
         this.jobListIndexService.register(this.redisConnection, this.queue);
     }
 
