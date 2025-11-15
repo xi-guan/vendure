@@ -3,6 +3,7 @@ import swc from 'unplugin-swc';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+    root: __dirname,
     plugins: [
         // SWC required to support decorators used in test plugins
         swc.vite({
@@ -26,6 +27,9 @@ export default defineConfig({
         },
         typecheck: {
             tsconfig: path.join(__dirname, 'config/tsconfig.e2e.json'),
+        },
+        env: {
+            PACKAGE: 'cli',
         },
     },
 });

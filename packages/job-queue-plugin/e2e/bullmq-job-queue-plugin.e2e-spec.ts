@@ -14,8 +14,6 @@ const Redis = require('ioredis');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { redisHost, redisPort } = require('./constants');
 
-jest.setTimeout(10 * 3000);
-
 // TODO: How to solve issues with Jest open handles after test suite finishes?
 // See https://github.com/luin/ioredis/issues/1088
 
