@@ -21,16 +21,18 @@ export class RedisHealthIndicator extends HealthIndicator {
             ? baseOptions
             : { ...(baseOptions as any), maxRetriesPerRequest: null };
         const connection = new RedisConnection(connectionOptions);
+
+        // Attach error handler immediately to prevent unhandled errors
+        connection.on('error', err => {
+            Logger.error(
+                `Redis health check error: ${JSON.stringify(err.message)}`,
+                loggerCtx,
+                err.stack,
+            );
+        });
+
         const pingResult = await new Promise(async (resolve, reject) => {
             try {
-                connection.on('error', err => {
-                    Logger.error(
-                        `Redis health check error: ${JSON.stringify(err.message)}`,
-                        loggerCtx,
-                        err.stack,
-                    );
-                    resolve(err);
-                });
                 if (this.timeoutTimer) {
                     clearTimeout(this.timeoutTimer);
                 }
