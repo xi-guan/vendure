@@ -1,8 +1,34 @@
 import path from 'path';
 import { pathToFileURL } from 'url';
-import { loadEnv } from 'vite';
+import { loadEnv, Plugin } from 'vite';
 import { defineConfig } from 'vitest/config';
 import { vendureDashboardPlugin } from './vite/vite-plugin-vendure-dashboard.js';
+
+/**
+ * Mock plugin to provide virtual:admin-api-schema during tests
+ */
+function mockAdminApiSchemaPlugin(): Plugin {
+    const virtualModuleId = 'virtual:admin-api-schema';
+    const resolvedVirtualModuleId = `\0${virtualModuleId}`;
+
+    return {
+        name: 'vendure:mock-admin-api-schema',
+        resolveId(id) {
+            if (id === virtualModuleId) {
+                return resolvedVirtualModuleId;
+            }
+        },
+        load(id) {
+            if (id === resolvedVirtualModuleId) {
+                // Return the mock schema info from testing-utils
+                return `
+                    import { getMockSchemaInfo } from './src/lib/framework/document-introspection/testing-utils.js';
+                    export const schemaInfo = getMockSchemaInfo().schemaInfo;
+                `;
+            }
+        },
+    };
+}
 
 /**
  * This config is used for local development
@@ -28,6 +54,8 @@ export default ({ mode }: { mode: string }) => {
             exclude: ['./plugin/**/*', '**/node_modules/**/*'],
         },
         plugins: [
+            // Add mock plugin for tests before the main plugin
+            ...(process.env.VITEST ? [mockAdminApiSchemaPlugin()] : []),
             vendureDashboardPlugin({
                 vendureConfigPath: pathToFileURL(vendureConfigPath),
                 api: { host: adminApiHost, port: adminApiPort },

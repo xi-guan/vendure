@@ -1,15 +1,11 @@
 import { graphql } from 'gql.tada';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import {
     getFieldsFromDocumentNode,
     getListQueryFields,
     getOperationVariablesFields,
 } from './get-document-structure.js';
-
-vi.mock('virtual:admin-api-schema', () => {
-    return import('./testing-utils.js').then(m => m.getMockSchemaInfo());
-});
 
 describe('getListQueryFields', () => {
     it('should extract fields from a simple paginated list query', () => {

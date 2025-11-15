@@ -1,11 +1,7 @@
 import { DocumentNode, parse, print } from 'graphql';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { includeOnlySelectedListFields } from './include-only-selected-list-fields.js';
-
-vi.mock('virtual:admin-api-schema', () => {
-    return import('./testing-utils.js').then(m => m.getMockSchemaInfo());
-});
 
 describe('includeOnlySelectedListFields', () => {
     const createTestDocument = (itemsFields: string): DocumentNode => {

@@ -1,13 +1,9 @@
 import { graphql, VariablesOf } from 'gql.tada';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { getOperationVariablesFields } from '../document-introspection/get-document-structure.js';
 
 import { removeEmptyIdFields } from './utils.js';
-
-vi.mock('virtual:admin-api-schema', () => {
-    return import('../document-introspection/testing-utils.js').then(m => m.getMockSchemaInfo());
-});
 
 const createProductDocument = graphql(`
     mutation CreateProduct($input: CreateProductInput!) {
