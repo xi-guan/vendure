@@ -81,11 +81,12 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
         };
         // Ensure maxRetriesPerRequest is set to null as required by BullMQ
         const baseConnectionOptions = options.connection ??
-            ({ host: 'localhost', port: 6379, maxRetriesPerRequest: null } as RedisOptions);
+            ({ host: 'localhost', port: 6379, maxRetriesPerRequest: null, lazyConnect: true } as RedisOptions);
 
         // Create a clean config object with maxRetriesPerRequest: null for creating new connections
+        // Preserve all original options including lazyConnect to prevent premature connection attempts
         this.redisConfig = baseConnectionOptions instanceof EventEmitter
-            ? { maxRetriesPerRequest: null } as RedisOptions
+            ? { maxRetriesPerRequest: null, lazyConnect: true } as RedisOptions
             : { ...(baseConnectionOptions as any), maxRetriesPerRequest: null };
 
         this.connectionOptions = baseConnectionOptions instanceof EventEmitter
@@ -177,7 +178,17 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
         };
         // Subscription-mode Redis connection for the cancellation messages
         // Always use redisConfig (not connectionOptions) to ensure maxRetriesPerRequest is null
-        this.cancellationSub = new Redis(this.redisConfig);
+        // When the main connection is an EventEmitter (existing Redis instance), extract its config
+        if (this.connectionOptions instanceof EventEmitter && 'options' in this.connectionOptions) {
+            const redisInstance = this.connectionOptions as Redis;
+            const existingOptions = (redisInstance as any).options || {};
+            this.cancellationSub = new Redis({
+                ...existingOptions,
+                maxRetriesPerRequest: null,
+            });
+        } else {
+            this.cancellationSub = new Redis(this.redisConfig);
+        }
         this.cancellationSub.on('error', (err: any) => {
             Logger.error(
                 `Redis cancellation subscriber error: ${JSON.stringify(err.message)}`,

@@ -14,9 +14,10 @@ export class RedisHealthIndicator extends HealthIndicator {
         super();
     }
     async isHealthy(key: string, timeoutMs = 5000): Promise<HealthIndicatorResult> {
-        const baseOptions = this.options.connection ?? { maxRetriesPerRequest: null };
+        const baseOptions = this.options.connection ?? { maxRetriesPerRequest: null, lazyConnect: true };
         // Ensure maxRetriesPerRequest is set to null as required by BullMQ
         // Create a new options object to avoid mutating the original
+        // Preserve lazyConnect to prevent premature connection attempts
         const connectionOptions = baseOptions instanceof EventEmitter
             ? baseOptions
             : { ...(baseOptions as any), maxRetriesPerRequest: null };
