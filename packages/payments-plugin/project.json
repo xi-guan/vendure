@@ -13,15 +13,6 @@
       "outputs": ["{projectRoot}/lib"],
       "dependsOn": ["^build"]
     },
-    "ci": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "npm run build",
-        "cwd": "packages/payments-plugin"
-      },
-      "outputs": ["{projectRoot}/lib"],
-      "dependsOn": ["^build"]
-    },
     "lint": {
       "executor": "nx:run-commands",
       "options": {
