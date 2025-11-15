@@ -18,6 +18,14 @@ export class RedisJobBufferStorageStrategy implements JobBufferStorageStrategy {
         } else {
             this.redis = new Redis(options.connection as RedisOptions);
         }
+        // Attach error handler to prevent unhandled errors
+        this.redis.on('error', (err: any) => {
+            Logger.error(
+                `Redis job buffer storage error: ${JSON.stringify(err.message)}`,
+                loggerCtx,
+                err.stack,
+            );
+        });
     }
 
     async add(bufferId: string, job: Job<any>): Promise<Job<any>> {
