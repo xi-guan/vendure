@@ -14,6 +14,7 @@ describe('GraphiQLPlugin', () => {
     const { server, adminClient } = createTestEnvironment(
         mergeConfig(testConfig(), {
             apiOptions: {
+                port: 3050, // Use a unique port to avoid conflicts
                 adminApiPlayground: true,
                 shopApiPlayground: true,
             },
