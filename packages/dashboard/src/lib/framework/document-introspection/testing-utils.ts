@@ -6,17 +6,34 @@ export function getMockSchemaInfo() {
                     products: ['ProductList', false, false, true],
                     product: ['Product', false, false, false],
                     collection: ['Collection', false, false, false],
+                    collections: ['CollectionList', false, false, true],
                     order: ['Order', false, false, false],
+                    orders: ['OrderList', false, false, true],
                 },
                 Mutation: {
                     updateProduct: ['Product', false, false, false],
+                    createProduct: ['Product', false, false, false],
                     adjustDraftOrderLine: ['Order', false, false, false],
                 },
 
                 Collection: {
                     id: ['ID', false, false, false],
+                    createdAt: ['DateTime', false, false, false],
+                    updatedAt: ['DateTime', false, false, false],
                     name: ['String', false, false, false],
+                    slug: ['String', false, false, false],
+                    featuredAsset: ['Asset', true, false, false],
+                    breadcrumbs: ['Collection', false, true, false],
+                    children: ['Collection', false, true, false],
+                    position: ['Int', false, false, false],
+                    isPrivate: ['Boolean', false, false, false],
+                    parentId: ['ID', true, false, false],
                     productVariants: ['ProductVariantList', false, false, true],
+                },
+
+                CollectionList: {
+                    items: ['Collection', false, true, false],
+                    totalItems: ['Int', false, false, false],
                 },
 
                 ProductVariantList: {
@@ -127,17 +144,50 @@ export function getMockSchemaInfo() {
                 },
                 Order: {
                     id: ['ID', false, false, false],
+                    code: ['String', false, false, false],
+                    customer: ['Customer', true, false, false],
                     lines: ['OrderLine', false, true, false],
+                },
+                OrderList: {
+                    items: ['Order', false, true, false],
+                    totalItems: ['Int', false, false, false],
                 },
                 OrderLine: {
                     id: ['ID', false, false, false],
                     quantity: ['Int', false, false, false],
+                    productVariant: ['ProductVariant', false, false, false],
+                },
+                Customer: {
+                    id: ['ID', false, false, false],
+                    firstName: ['String', false, false, false],
+                    addresses: ['Address', false, true, false],
+                },
+                Address: {
+                    id: ['ID', false, false, false],
+                    streetLine1: ['String', false, false, false],
+                    country: ['Country', false, false, false],
+                },
+                Country: {
+                    id: ['ID', false, false, false],
+                    name: ['String', false, false, false],
+                },
+                Coordinate: {
+                    x: ['Float', false, false, false],
+                    y: ['Float', false, false, false],
                 },
             },
             inputs: {
                 UpdateProductInput: {
                     id: ['ID', false, false, false],
                     name: ['String', false, false, false],
+                },
+                CreateProductInput: {
+                    translations: ['ProductTranslationInput', false, true, false],
+                    featuredAssetId: ['ID', true, false, false],
+                },
+                ProductTranslationInput: {
+                    id: ['ID', true, false, false],
+                    languageCode: ['LanguageCode', false, false, false],
                 },
                 AdjustDraftOrderLineInput: {
                     orderLineId: ['ID', false, false, false],
@@ -154,6 +204,8 @@ export function getMockSchemaInfo() {
                 'DateTime',
                 'Upload',
                 'CurrencyCode',
+                'LanguageCode',
+                'Money',
             ],
             enums: {},
         },
