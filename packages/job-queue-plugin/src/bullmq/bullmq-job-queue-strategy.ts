@@ -53,6 +53,7 @@ import { getPrefix } from './utils';
 export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
     private redisConnection: Redis | Cluster;
     private connectionOptions: ConnectionOptions;
+    private redisConfig: RedisOptions;
     private queue: Queue;
     private worker: Worker;
     private workerProcessor: Processor;
@@ -78,9 +79,18 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
                 removeOnFail: options.workerOptions?.removeOnFail ?? { age: 60 * 60 * 24 * 30, count: 5000 },
             },
         };
-        this.connectionOptions =
-            options.connection ??
+        // Ensure maxRetriesPerRequest is set to null as required by BullMQ
+        const baseConnectionOptions = options.connection ??
             ({ host: 'localhost', port: 6379, maxRetriesPerRequest: null } as RedisOptions);
+
+        // Create a clean config object with maxRetriesPerRequest: null for creating new connections
+        this.redisConfig = baseConnectionOptions instanceof EventEmitter
+            ? { maxRetriesPerRequest: null } as RedisOptions
+            : { ...(baseConnectionOptions as any), maxRetriesPerRequest: null };
+
+        this.connectionOptions = baseConnectionOptions instanceof EventEmitter
+            ? baseConnectionOptions
+            : this.redisConfig;
 
         this.redisConnection =
             this.connectionOptions instanceof EventEmitter
@@ -150,7 +160,8 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
             throw new InternalServerError(`No processor defined for the queue "${queueName}"`);
         };
         // Subscription-mode Redis connection for the cancellation messages
-        this.cancellationSub = new Redis(this.connectionOptions as RedisOptions);
+        // Always use redisConfig (not connectionOptions) to ensure maxRetriesPerRequest is null
+        this.cancellationSub = new Redis(this.redisConfig);
         this.jobListIndexService.register(this.redisConnection, this.queue);
     }
 
