@@ -423,7 +423,7 @@ describe('getFieldsFromDocumentNode', () => {
             },
             {
                 isPaginatedList: false,
-                isScalar: false,
+                isScalar: true,
                 list: false,
                 name: 'price',
                 nullable: false,
