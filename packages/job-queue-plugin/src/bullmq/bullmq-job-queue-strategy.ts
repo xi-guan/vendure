@@ -78,9 +78,13 @@ export class BullMQJobQueueStrategy implements InspectableJobQueueStrategy {
                 removeOnFail: options.workerOptions?.removeOnFail ?? { age: 60 * 60 * 24 * 30, count: 5000 },
             },
         };
-        this.connectionOptions =
-            options.connection ??
+        // Ensure maxRetriesPerRequest is set to null as required by BullMQ
+        const baseConnectionOptions = options.connection ??
             ({ host: 'localhost', port: 6379, maxRetriesPerRequest: null } as RedisOptions);
+
+        this.connectionOptions = baseConnectionOptions instanceof EventEmitter
+            ? baseConnectionOptions
+            : { ...(baseConnectionOptions as any), maxRetriesPerRequest: null };
 
         this.redisConnection =
             this.connectionOptions instanceof EventEmitter
