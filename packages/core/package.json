@@ -53,6 +53,14 @@
         "./cli": {
             "types": "./cli/index.d.ts",
             "default": "./cli/index.js"
+        },
+        "./dist/*": {
+            "types": "./dist/*.d.ts",
+            "default": "./dist/*"
+        },
+        "./cli/*": {
+            "types": "./cli/*.d.ts",
+            "default": "./cli/*"
         }
     },
     "files": [
