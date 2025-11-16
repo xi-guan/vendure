@@ -51,8 +51,8 @@
             "default": "./dist/index.js"
         },
         "./cli": "./cli/index.js",
-        "./cli/*": "./cli/*.js",
-        "./dist/*": "./dist/*.js"
+        "./cli/*": "./cli/*",
+        "./dist/*": "./dist/*"
     },
     "files": [
         "dist/**/*",
