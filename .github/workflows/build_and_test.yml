@@ -100,8 +100,22 @@ jobs:
                     pnpm nx run-many -t build --parallel=3
                   fi
 
+            - name: Upload build artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: build-artifacts
+                  path: |
+                      packages/*/dist
+                      packages/*/lib
+                      packages/*/package
+                      packages/admin-ui/build
+                      packages/dashboard/build
+                      .nx/cache
+                  retention-days: 1
+
     unit-tests:
         name: unit tests
+        needs: build
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -163,13 +177,10 @@ jobs:
             - name: Generate Prisma client
               run: pnpm --filter @vendure/core run prisma:generate
 
-            - name: Build affected packages
-              run: |
-                  if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    pnpm nx affected -t build --base=origin/${{ github.base_ref }} --head=HEAD --parallel=3
-                  else
-                    pnpm nx run-many -t build --parallel=3
-                  fi
+            - name: Download build artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: build-artifacts
 
             - name: Run affected unit tests
               run: |
@@ -181,6 +192,7 @@ jobs:
 
     e2e-tests:
         name: e2e tests
+        needs: build
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -264,13 +276,10 @@ jobs:
             - name: Generate Prisma client
               run: pnpm --filter @vendure/core run prisma:generate
 
-            - name: Build affected packages
-              run: |
-                  if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    pnpm nx affected -t build --base=origin/${{ github.base_ref }} --head=HEAD --parallel=3
-                  else
-                    pnpm nx run-many -t build --parallel=3
-                  fi
+            - name: Download build artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: build-artifacts
 
             - name: Run affected e2e tests
               env:
