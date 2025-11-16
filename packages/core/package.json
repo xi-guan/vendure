@@ -45,15 +45,6 @@
     },
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "default": "./dist/index.js"
-        },
-        "./cli": "./cli/index.js",
-        "./cli/*": "./cli/*",
-        "./dist/*": "./dist/*"
-    },
     "files": [
         "dist/**/*",
         "cli/**/*"
