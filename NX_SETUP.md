@@ -107,7 +107,7 @@ Packages are configured to build in the correct order:
 
 ## Performance Benefits
 
-### Before Nx
+### Before Nx (with Lerna)
 ```bash
 $ lerna run build
 ✓ 20 packages built in 180s
@@ -168,23 +168,23 @@ Example (`packages/core/project.json`):
 
 ## Integration with Existing Workflow
 
-Nx complements the existing Lerna setup:
-- **Lerna** still handles versioning and publishing
-- **Nx** handles building, testing, and caching
-- Both can be used side-by-side
+Lerna has been fully removed from this project. Nx now handles all monorepo operations:
+- **Nx** handles building, testing, caching, and task orchestration
+- **Version management** is done manually via root package.json
 
-Existing commands still work:
+All npm scripts have been migrated to use Nx:
 ```bash
-lerna run build              # Works (no caching)
-lerna run test               # Works (no caching)
-npm run build                # Works (uses Lerna)
+npm run build                # Uses Nx (with caching)
+npm run test                 # Uses Nx (with caching)
+npm run watch                # Uses Nx (parallel execution)
 ```
 
-New Nx commands provide better performance:
+Nx-specific commands provide additional capabilities:
 ```bash
-npm run nx:build             # Faster (with caching)
-npm run nx:test              # Faster (with caching)
-npm run nx:affected:build    # Much faster (only changed packages)
+npm run nx:build             # Build all packages (with caching)
+npm run nx:test              # Test all packages (with caching)
+npm run nx:affected:build    # Only build changed packages
+npm run nx:affected:test     # Only test affected packages
 ```
 
 ## Troubleshooting
