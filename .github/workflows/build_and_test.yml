@@ -78,9 +78,9 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: .nx/cache
-                  key: ${{ runner.os }}-nx-${{ github.sha }}
+                  key: ${{ runner.os }}-nx-v2-${{ github.sha }}
                   restore-keys: |
-                      ${{ runner.os }}-nx-
+                      ${{ runner.os }}-nx-v2-
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false
@@ -159,9 +159,9 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: .nx/cache
-                  key: ${{ runner.os }}-nx-${{ github.sha }}
+                  key: ${{ runner.os }}-nx-v2-${{ github.sha }}
                   restore-keys: |
-                      ${{ runner.os }}-nx-
+                      ${{ runner.os }}-nx-v2-
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false
@@ -262,9 +262,9 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: .nx/cache
-                  key: ${{ runner.os }}-nx-${{ github.sha }}
+                  key: ${{ runner.os }}-nx-v2-${{ github.sha }}
                   restore-keys: |
-                      ${{ runner.os }}-nx-
+                      ${{ runner.os }}-nx-v2-
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false

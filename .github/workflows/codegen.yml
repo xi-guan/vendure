@@ -47,10 +47,10 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: .nx/cache
-                  key: ${{ runner.os }}-nx-codegen-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+                  key: ${{ runner.os }}-nx-codegen-v2-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
                   restore-keys: |
-                      ${{ runner.os }}-nx-codegen-${{ hashFiles('pnpm-lock.yaml') }}-
-                      ${{ runner.os }}-nx-codegen-
+                      ${{ runner.os }}-nx-codegen-v2-${{ hashFiles('pnpm-lock.yaml') }}-
+                      ${{ runner.os }}-nx-codegen-v2-
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false
