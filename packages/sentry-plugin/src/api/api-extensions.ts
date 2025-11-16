@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
+import { DocumentNode } from 'graphql';
 
-export const testApiExtensions = gql`
+export const testApiExtensions: DocumentNode = gql`
     enum TestErrorType {
         UNCAUGHT_ERROR
         THROWN_ERROR

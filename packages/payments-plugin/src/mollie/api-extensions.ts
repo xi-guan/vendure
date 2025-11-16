@@ -1,4 +1,5 @@
 import { gql } from 'graphql-tag';
+import { DocumentNode } from 'graphql';
 
 const commonSchemaExtensions = gql`
     input MolliePaymentIntentInput {
@@ -53,7 +54,7 @@ const commonSchemaExtensions = gql`
     }
 `;
 
-export const shopApiExtensions = gql`
+export const shopApiExtensions: DocumentNode = gql`
     ${commonSchemaExtensions}
 
     type MollieAmount {
@@ -84,7 +85,7 @@ export const shopApiExtensions = gql`
     }
 `;
 
-export const adminApiExtensions = gql`
+export const adminApiExtensions: DocumentNode = gql`
     ${commonSchemaExtensions}
 
     extend enum ErrorCode {
