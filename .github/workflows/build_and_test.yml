@@ -83,6 +83,9 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
 
+            - name: Rebuild native modules
+              run: pnpm rebuild bcrypt sharp better-sqlite3 sqlite3 || true
+
             - name: Build affected packages
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
@@ -139,6 +142,9 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+
+            - name: Rebuild native modules
+              run: pnpm rebuild bcrypt sharp better-sqlite3 sqlite3 || true
 
             - name: Build affected packages
               run: |
@@ -231,6 +237,9 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
+
+            - name: Rebuild native modules
+              run: pnpm rebuild bcrypt sharp better-sqlite3 sqlite3 || true
 
             - name: Build affected packages
               run: |
