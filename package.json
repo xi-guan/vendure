@@ -43,6 +43,7 @@
     "nx:affected:lint": "nx affected -t lint"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.5",
     "@commitlint/cli": "^19.1.0",
     "@commitlint/config-conventional": "^19.1.0",
     "@graphql-codegen/add": "6.0.0",
