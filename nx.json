@@ -25,7 +25,7 @@
     "sharedGlobals": [
       "{workspaceRoot}/tsconfig.json",
       "{workspaceRoot}/package.json",
-      "{workspaceRoot}/lerna.json"
+      "{workspaceRoot}/nx.json"
     ]
   },
   "targetDefaults": {
@@ -34,14 +34,17 @@
       "outputs": [
         "{projectRoot}/dist",
         "{projectRoot}/lib",
-        "{projectRoot}/package"
+        "{projectRoot}/package",
+        "{projectRoot}/build"
       ],
-      "cache": true
+      "cache": true,
+      "dependsOn": ["^build"]
     },
     "test": {
       "inputs": ["default", "^production", "sharedGlobals", "{workspaceRoot}/vitest.config.mts"],
       "outputs": ["{projectRoot}/coverage"],
-      "cache": true
+      "cache": true,
+      "dependsOn": ["^build"]
     },
     "e2e": {
       "dependsOn": ["build"],
@@ -66,19 +69,22 @@
       }
     }
   ],
-  "parallel": 3,
+  "parallel": 8,
+  "maxParallel": 8,
   "cacheDirectory": ".nx/cache",
   "useInferencePlugins": false,
+  "useDaemonProcess": true,
   "defaultProject": "@vendure/core",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": ["build", "test", "lint", "e2e"],
-        "parallel": 3,
-        "cacheDirectory": ".nx/cache"
+        "parallel": 8,
+        "maxParallel": 8,
+        "cacheDirectory": ".nx/cache",
+        "runtimeCacheInputs": ["node -v"]
       }
     }
-  },
-  "nxCloudAccessToken": ""
+  }
 }

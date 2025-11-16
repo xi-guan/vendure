@@ -20,10 +20,10 @@
     "type": "commonjs",
     "scripts": {
         "postinstall": "npm run prisma:generate",
-        "tsc:watch": "tsc -p ./build/tsconfig.build.json --watch",
+        "swc:watch": "swc src -d dist --watch --config-file ../../.swcrc --strip-leading-paths",
         "copy:watch": "ts-node build/copy-static.ts watch",
-        "build": "rimraf dist && tsc -p ./build/tsconfig.build.json && tsc -p ./build/tsconfig.cli.json && ts-node build/copy-static.ts build",
-        "watch": "concurrently npm:tsc:watch npm:copy:watch",
+        "build": "rimraf dist && swc src -d dist --config-file ../../.swcrc --strip-leading-paths && tsc -p ./build/tsconfig.build.json --emitDeclarationOnly && tsc -p ./build/tsconfig.cli.json --emitDeclarationOnly && ts-node build/copy-static.ts build",
+        "watch": "concurrently npm:swc:watch npm:copy:watch",
         "lint": "eslint --fix .",
         "test": "vitest --config vitest.config.mts --run",
         "e2e": "vitest --config e2e/vitest.config.ts --run",

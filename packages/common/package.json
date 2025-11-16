@@ -8,8 +8,8 @@
         "url": "https://github.com/vendure-ecommerce/vendure"
     },
     "scripts": {
-        "watch": "tsc -p ./tsconfig.build.json -w",
-        "build": "rimraf lib && tsc -p ./tsconfig.build.json",
+        "watch": "swc src -d lib --watch --config-file ../../.swcrc --strip-leading-paths",
+        "build": "rimraf lib && swc src -d lib --config-file ../../.swcrc --strip-leading-paths && tsc -p ./tsconfig.build.json --emitDeclarationOnly",
         "lint": "eslint --fix .",
         "test": "vitest --run",
         "ci": "npm run build"
