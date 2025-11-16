@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
+import { DocumentNode } from 'graphql';
 
-export const metricsApiExtensions = gql`
+export const metricsApiExtensions: DocumentNode = gql`
     type MetricSummary {
         interval: MetricInterval!
         type: MetricType!
@@ -32,6 +33,6 @@ export const metricsApiExtensions = gql`
     }
 `;
 
-export function getApiExtensions() {
+export function getApiExtensions(): DocumentNode {
     return metricsApiExtensions;
 }

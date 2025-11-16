@@ -38,14 +38,18 @@
     },
     "dependencies": {
         "@graphql-typed-document-node/core": "^3.2.0",
+        "@nestjs/common": "^11.0.12",
+        "@nestjs/core": "^11.0.12",
         "@vendure/common": "3.5.0",
         "@vendure/core": "3.5.0",
+        "express": "^5.1.0",
         "faker": "^4.1.0",
         "form-data": "^4.0.0",
         "graphql": "^16.11.0",
         "graphql-tag": "^2.12.6",
         "node-fetch": "^2.7.0",
-        "sql.js": "1.13.0"
+        "sql.js": "1.13.0",
+        "typeorm": "^0.3.21"
     },
     "devDependencies": {
         "@types/faker": "^5.5.9",

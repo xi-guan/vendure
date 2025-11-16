@@ -69,5 +69,16 @@
   "parallel": 3,
   "cacheDirectory": ".nx/cache",
   "useInferencePlugins": false,
-  "defaultProject": "@vendure/core"
+  "defaultProject": "@vendure/core",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "parallel": 3,
+        "cacheDirectory": ".nx/cache"
+      }
+    }
+  },
+  "nxCloudAccessToken": ""
 }

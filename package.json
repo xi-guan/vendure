@@ -86,7 +86,12 @@
     "@swc/core-linux-x64-gnu": "1.4.7"
   },
   "resolutions": {
-    "@apollo/server": "^5.0.0"
+    "@apollo/server": "^4.12.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "@apollo/server": "^4.12.2"
+    }
   },
   "workspaces": {
     "packages": [

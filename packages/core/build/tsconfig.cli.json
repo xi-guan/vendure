@@ -1,7 +1,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../cli"
+    "outDir": "../cli",
+    "baseUrl": "..",
+    "paths": {
+      "@vendure/core": ["dist/index.d.ts"],
+      "@vendure/core/*": ["dist/*"]
+    }
   },
   "files": [
     "../src/cli/index.ts",
