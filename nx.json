@@ -69,8 +69,8 @@
       }
     }
   ],
-  "parallel": 8,
-  "maxParallel": 8,
+  "parallel": 3,
+  "maxParallel": 3,
   "cacheDirectory": ".nx/cache",
   "useInferencePlugins": false,
   "useDaemonProcess": true,
@@ -80,8 +80,8 @@
       "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": ["build", "test", "lint", "e2e"],
-        "parallel": 8,
-        "maxParallel": 8,
+        "parallel": 3,
+        "maxParallel": 3,
         "cacheDirectory": ".nx/cache",
         "runtimeCacheInputs": ["node -v"]
       }

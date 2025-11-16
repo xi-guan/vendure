@@ -95,9 +95,9 @@ jobs:
             - name: Build affected packages
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    pnpm nx affected -t build --base=origin/${{ github.base_ref }} --head=HEAD --parallel=5
+                    pnpm nx affected -t build --base=origin/${{ github.base_ref }} --head=HEAD --parallel=3
                   else
-                    pnpm nx run-many -t build --parallel=5
+                    pnpm nx run-many -t build --parallel=3
                   fi
 
             - name: Upload build artifacts
@@ -185,9 +185,9 @@ jobs:
             - name: Run affected unit tests
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    pnpm nx affected -t test --base=origin/${{ github.base_ref }} --head=HEAD --parallel=5
+                    pnpm nx affected -t test --base=origin/${{ github.base_ref }} --head=HEAD --parallel=3
                   else
-                    pnpm nx run-many -t test --parallel=5
+                    pnpm nx run-many -t test --parallel=3
                   fi
 
     e2e-tests:

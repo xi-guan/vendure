@@ -25,18 +25,24 @@ This document summarizes the performance optimizations applied to the Vendure pr
 ### ✅ 2. Optimized Nx Configuration
 
 **Changes in `nx.json`:**
-- Increased parallelization: `parallel: 3` → `parallel: 8`
-- Added `maxParallel: 8` for better task distribution
+- **Tuned parallelization for GitHub Actions**: `parallel: 3` (optimal for 2-core runner)
+- Added `maxParallel: 3` to prevent CPU oversubscription
 - Enabled daemon process: `useDaemonProcess: true`
 - Enhanced cache configuration with `runtimeCacheInputs`
 - Updated `sharedGlobals` to reference `nx.json` instead of removed `lerna.json`
 - Added `dependsOn` relationships for better task orchestration
 
+**Why parallel=3?**
+- GitHub Actions `ubuntu-latest` runner: **2-core CPU**
+- Optimal = CPU cores × 1.5 = 2 × 1.5 = 3
+- Prevents CPU oversubscription and context switching overhead
+- See `NX_PARALLEL_GUIDE.md` for detailed explanation
+
 **Benefits:**
-- 30-40% faster CI/CD pipelines
-- Better CPU utilization with 8 parallel tasks
+- Optimal CPU utilization without thrashing
 - Faster subsequent builds with daemon process
 - More intelligent caching
+- Avoids performance degradation from over-parallelization
 
 ### ✅ 3. SWC Compiler Full Adoption
 

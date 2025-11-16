@@ -11,7 +11,7 @@
     "url": "https://github.com/vendure-ecommerce/vendure"
   },
   "scripts": {
-    "watch": "nx run-many -t watch --parallel=5",
+    "watch": "nx run-many -t watch --parallel=3",
     "watch:core-common": "nx run @vendure/common:watch & nx run @vendure/core:watch",
     "build:core-common": "nx run @vendure/common:build && nx run @vendure/core:build",
     "lint": "eslint --fix",
@@ -21,9 +21,9 @@
     "docs:build": "npm run docs:generate-typescript-docs && npm run docs:generate-graphql-docs",
     "codegen": "tsc -p scripts/codegen/plugins && ts-node scripts/codegen/generate-graphql-types.ts",
     "version": "npm i && npm run check-imports && npm run check-angular-versions && npm run build && npm run check-core-type-defs && npm run generate-changelog && git add CHANGELOG* && git add */version.ts",
-    "test": "nx run-many -t test --parallel=5",
+    "test": "nx run-many -t test --parallel=3",
     "e2e": "nx run-many -t e2e --parallel=2",
-    "build": "nx run-many -t build --parallel=5",
+    "build": "nx run-many -t build --parallel=3",
     "check-imports": "ts-node scripts/check-imports.ts",
     "check-core-type-defs": "ts-node scripts/check-core-type-defs.ts",
     "check-angular-versions": "ts-node scripts/check-angular-versions.ts",
