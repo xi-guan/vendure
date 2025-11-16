@@ -2,9 +2,14 @@ name: Codegen
 
 on:
     workflow_call:
+        secrets:
+            NX_CLOUD_ACCESS_TOKEN:
+                required: false
+                description: 'Nx Cloud access token for caching'
 
 env:
     CI: true
+    NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 jobs:
     codegen:
