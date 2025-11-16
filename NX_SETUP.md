@@ -107,13 +107,13 @@ Packages are configured to build in the correct order:
 
 ## Performance Benefits
 
-### Before Nx
+### Without Caching
 ```bash
-$ lerna run build
+$ nx run-many -t build --skip-nx-cache
 ✓ 20 packages built in 180s
 ```
 
-### After Nx (first build)
+### With Nx Caching (first build)
 ```bash
 $ nx run-many -t build
 ✓ 20 packages built in 180s (with caching enabled)
@@ -168,19 +168,19 @@ Example (`packages/core/project.json`):
 
 ## Integration with Existing Workflow
 
-Nx complements the existing Lerna setup:
-- **Lerna** still handles versioning and publishing
+Nx provides comprehensive monorepo management:
+- **Nx Release** handles versioning and publishing
 - **Nx** handles building, testing, and caching
-- Both can be used side-by-side
+- **Nx Cloud** provides distributed caching and task execution
 
-Existing commands still work:
+Common commands:
 ```bash
-lerna run build              # Works (no caching)
-lerna run test               # Works (no caching)
-npm run build                # Works (uses Lerna)
+npm run build                # Uses Nx with caching
+npm run test                 # Uses Nx with caching
+npm run watch                # Uses Nx parallel execution
 ```
 
-New Nx commands provide better performance:
+Nx commands for advanced usage:
 ```bash
 npm run nx:build             # Faster (with caching)
 npm run nx:test              # Faster (with caching)

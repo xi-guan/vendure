@@ -24,8 +24,7 @@
         ],
         "sharedGlobals": [
             "{workspaceRoot}/tsconfig.json",
-            "{workspaceRoot}/package.json",
-            "{workspaceRoot}/lerna.json"
+            "{workspaceRoot}/package.json"
         ]
     },
     "targetDefaults": {
@@ -57,5 +56,23 @@
     "cacheDirectory": ".nx/cache",
     "useInferencePlugins": false,
     "defaultProject": "@vendure/core",
-    "nxCloudId": "6919efd2d9db341741580d62"
+    "nxCloudId": "6919efd2d9db341741580d62",
+    "release": {
+        "version": {
+            "generatorOptions": {
+                "packageRoot": "dist/packages/{projectName}",
+                "currentVersionResolver": "git-tag"
+            }
+        },
+        "changelog": {
+            "workspaceChangelog": {
+                "createRelease": "github"
+            }
+        },
+        "git": {
+            "commit": true,
+            "tag": true,
+            "commitMessage": "chore: Publish {version}"
+        }
+    }
 }
