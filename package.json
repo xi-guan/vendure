@@ -15,7 +15,8 @@
     "watch:core-common": "nx run @vendure/common:watch & nx run @vendure/core:watch",
     "build:core-common": "nx run @vendure/common:build && nx run @vendure/core:build",
     "lint": "eslint --fix",
-    "format": "prettier --write --html-whitespace-sensitivity ignore",
+    "format": "biome format --write",
+    "format:check": "biome check --diagnostic-level=error",
     "docs:generate-typescript-docs": "ts-node scripts/docs/generate-typescript-docs.ts",
     "docs:generate-graphql-docs": "ts-node scripts/docs/generate-graphql-docs.ts --api=shop && ts-node scripts/docs/generate-graphql-docs.ts --api=admin",
     "docs:build": "npm run docs:generate-typescript-docs && npm run docs:generate-graphql-docs",
@@ -38,6 +39,7 @@
     "nx:affected:lint": "nx affected -t lint"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.5",
     "@commitlint/cli": "^19.1.0",
     "@commitlint/config-conventional": "^19.1.0",
     "@graphql-codegen/add": "6.0.0",

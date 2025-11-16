@@ -86,5 +86,7 @@
         "runtimeCacheInputs": ["node -v"]
       }
     }
-  }
+  },
+  "nxCloudAccessToken": "",
+  "nxCloudId": "6919efd2d9db341741580d62"
 }
