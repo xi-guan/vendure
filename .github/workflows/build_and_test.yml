@@ -34,6 +34,8 @@ concurrency:
 jobs:
     codegen:
         uses: ./.github/workflows/codegen.yml
+        secrets:
+            NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'pull_request' && secrets.NX_CLOUD_ACCESS_TOKEN_READ_ONLY || secrets.NX_CLOUD_ACCESS_TOKEN }}
     build:
         needs: codegen
         name: build
