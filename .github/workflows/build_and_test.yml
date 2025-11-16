@@ -152,6 +152,11 @@ jobs:
                   npm run install
                   cd -
 
+            - name: Install Chrome for Karma tests
+              uses: browser-actions/setup-chrome@v1
+              with:
+                  chrome-version: stable
+
             - name: Build affected packages
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
