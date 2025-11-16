@@ -50,7 +50,9 @@
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
         },
-        "./*": "./*"
+        "./cli": "./cli/index.js",
+        "./cli/*": "./cli/*.js",
+        "./dist/*": "./dist/*.js"
     },
     "files": [
         "dist/**/*",
