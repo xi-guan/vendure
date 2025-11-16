@@ -89,6 +89,9 @@ jobs:
                   npm run install
                   cd -
 
+            - name: Generate Prisma client
+              run: pnpm --filter @vendure/core run prisma:generate
+
             - name: Build affected packages
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
@@ -156,6 +159,9 @@ jobs:
               uses: browser-actions/setup-chrome@v1
               with:
                   chrome-version: stable
+
+            - name: Generate Prisma client
+              run: pnpm --filter @vendure/core run prisma:generate
 
             - name: Build affected packages
               run: |
@@ -254,6 +260,9 @@ jobs:
                   cd node_modules/.pnpm/bcrypt@*/node_modules/bcrypt
                   npm run install
                   cd -
+
+            - name: Generate Prisma client
+              run: pnpm --filter @vendure/core run prisma:generate
 
             - name: Build affected packages
               run: |
