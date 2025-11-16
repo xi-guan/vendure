@@ -107,6 +107,7 @@ jobs:
                   path: |
                       packages/*/dist
                       packages/*/lib
+                      packages/*/cli
                       packages/*/package
                       packages/admin-ui/build
                       packages/dashboard/build
