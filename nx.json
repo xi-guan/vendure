@@ -24,8 +24,7 @@
         ],
         "sharedGlobals": [
             "{workspaceRoot}/tsconfig.json",
-            "{workspaceRoot}/package.json",
-            "{workspaceRoot}/lerna.json"
+            "{workspaceRoot}/package.json"
         ]
     },
     "targetDefaults": {
