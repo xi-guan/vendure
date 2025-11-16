@@ -50,6 +50,12 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false
 
+            - name: Build bcrypt native module
+              run: |
+                  cd node_modules/.pnpm/bcrypt@*/node_modules/bcrypt
+                  npm run install
+                  cd -
+
             - name: Build core and common packages
               run: |
                   pnpm nx build @vendure/common

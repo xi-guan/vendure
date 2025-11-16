@@ -83,6 +83,12 @@ jobs:
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false
 
+            - name: Build bcrypt native module
+              run: |
+                  cd node_modules/.pnpm/bcrypt@*/node_modules/bcrypt
+                  npm run install
+                  cd -
+
             - name: Build affected packages
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
@@ -139,6 +145,12 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false
+
+            - name: Build bcrypt native module
+              run: |
+                  cd node_modules/.pnpm/bcrypt@*/node_modules/bcrypt
+                  npm run install
+                  cd -
 
             - name: Build affected packages
               run: |
@@ -231,6 +243,12 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile --config.ignore-scripts=false
+
+            - name: Build bcrypt native module
+              run: |
+                  cd node_modules/.pnpm/bcrypt@*/node_modules/bcrypt
+                  npm run install
+                  cd -
 
             - name: Build affected packages
               run: |
