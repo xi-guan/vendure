@@ -1,84 +1,72 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "defaultBase": "master",
-  "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "!{projectRoot}/**/*.spec.ts",
-      "!{projectRoot}/**/*.test.ts",
-      "!{projectRoot}/e2e/**/*",
-      "!{projectRoot}/dist/**/*",
-      "!{projectRoot}/lib/**/*",
-      "!{projectRoot}/package/**/*",
-      "!{projectRoot}/.angular/**/*",
-      "!{projectRoot}/node_modules/**/*"
-    ],
-    "production": [
-      "default",
-      "!{projectRoot}/**/*.spec.ts",
-      "!{projectRoot}/**/*.test.ts",
-      "!{projectRoot}/e2e/**/*",
-      "!{projectRoot}/vitest.config.*",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/.eslintrc.json"
-    ],
-    "sharedGlobals": [
-      "{workspaceRoot}/tsconfig.json",
-      "{workspaceRoot}/package.json",
-      "{workspaceRoot}/lerna.json"
-    ]
-  },
-  "targetDefaults": {
-    "build": {
-      "inputs": ["production", "^production", "sharedGlobals"],
-      "outputs": [
-        "{projectRoot}/dist",
-        "{projectRoot}/lib",
-        "{projectRoot}/package"
-      ],
-      "cache": true
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "defaultBase": "master",
+    "namedInputs": {
+        "default": [
+            "{projectRoot}/**/*",
+            "!{projectRoot}/**/*.spec.ts",
+            "!{projectRoot}/**/*.test.ts",
+            "!{projectRoot}/e2e/**/*",
+            "!{projectRoot}/dist/**/*",
+            "!{projectRoot}/lib/**/*",
+            "!{projectRoot}/package/**/*",
+            "!{projectRoot}/.angular/**/*",
+            "!{projectRoot}/node_modules/**/*"
+        ],
+        "production": [
+            "default",
+            "!{projectRoot}/**/*.spec.ts",
+            "!{projectRoot}/**/*.test.ts",
+            "!{projectRoot}/e2e/**/*",
+            "!{projectRoot}/vitest.config.*",
+            "!{projectRoot}/tsconfig.spec.json",
+            "!{projectRoot}/.eslintrc.json"
+        ],
+        "sharedGlobals": [
+            "{workspaceRoot}/tsconfig.json",
+            "{workspaceRoot}/package.json",
+            "{workspaceRoot}/lerna.json"
+        ]
     },
-    "test": {
-      "inputs": ["default", "^production", "sharedGlobals", "{workspaceRoot}/vitest.config.mts"],
-      "outputs": ["{projectRoot}/coverage"],
-      "cache": true
+    "targetDefaults": {
+        "build": {
+            "inputs": ["production", "^production", "sharedGlobals"],
+            "outputs": ["{projectRoot}/dist", "{projectRoot}/lib", "{projectRoot}/package"],
+            "cache": true
+        },
+        "test": {
+            "inputs": ["default", "^production", "sharedGlobals", "{workspaceRoot}/vitest.config.mts"],
+            "outputs": ["{projectRoot}/coverage"],
+            "cache": true
+        },
+        "e2e": {
+            "dependsOn": ["build"],
+            "inputs": ["default", "^production", "sharedGlobals"],
+            "outputs": ["{projectRoot}/test-results"],
+            "cache": true
+        },
+        "lint": {
+            "inputs": ["default", "sharedGlobals", "{workspaceRoot}/.eslintrc.json"],
+            "outputs": [],
+            "cache": true
+        },
+        "watch": { "cache": false }
     },
-    "e2e": {
-      "dependsOn": ["build"],
-      "inputs": ["default", "^production", "sharedGlobals"],
-      "outputs": ["{projectRoot}/test-results"],
-      "cache": true
+    "plugins": [{ "plugin": "@nx/js", "options": { "analyzeSourceFiles": true } }],
+    "parallel": 3,
+    "cacheDirectory": ".nx/cache",
+    "useInferencePlugins": false,
+    "defaultProject": "@vendure/core",
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "nx/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["build", "test", "lint", "e2e"],
+                "parallel": 3,
+                "cacheDirectory": ".nx/cache"
+            }
+        }
     },
-    "lint": {
-      "inputs": ["default", "sharedGlobals", "{workspaceRoot}/.eslintrc.json"],
-      "outputs": [],
-      "cache": true
-    },
-    "watch": {
-      "cache": false
-    }
-  },
-  "plugins": [
-    {
-      "plugin": "@nx/js",
-      "options": {
-        "analyzeSourceFiles": true
-      }
-    }
-  ],
-  "parallel": 3,
-  "cacheDirectory": ".nx/cache",
-  "useInferencePlugins": false,
-  "defaultProject": "@vendure/core",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "test", "lint", "e2e"],
-        "parallel": 3,
-        "cacheDirectory": ".nx/cache"
-      }
-    }
-  },
-  "nxCloudAccessToken": ""
+    "nxCloudAccessToken": "",
+    "nxCloudId": "6919efd2d9db341741580d62"
 }
