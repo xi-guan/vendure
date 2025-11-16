@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
+import { DocumentNode } from 'graphql';
 
-export const adminApiExtensions = gql`
+export const adminApiExtensions: DocumentNode = gql`
     type DashboardMetricSummary {
         type: DashboardMetricType!
         title: String!
