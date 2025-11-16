@@ -31,7 +31,7 @@
     "targetDefaults": {
         "build": {
             "inputs": ["production", "^production", "sharedGlobals"],
-            "outputs": ["{projectRoot}/dist", "{projectRoot}/lib", "{projectRoot}/package"],
+            "outputs": ["{projectRoot}/dist", "{projectRoot}/lib", "{projectRoot}/package", "{projectRoot}/cli"],
             "cache": true
         },
         "test": {
