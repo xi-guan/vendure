@@ -53,20 +53,9 @@
         "watch": { "cache": false }
     },
     "plugins": [{ "plugin": "@nx/js", "options": { "analyzeSourceFiles": true } }],
-    "parallel": 3,
+    "parallel": 5,
     "cacheDirectory": ".nx/cache",
     "useInferencePlugins": false,
     "defaultProject": "@vendure/core",
-    "tasksRunnerOptions": {
-        "default": {
-            "runner": "nx/tasks-runners/default",
-            "options": {
-                "cacheableOperations": ["build", "test", "lint", "e2e"],
-                "parallel": 3,
-                "cacheDirectory": ".nx/cache"
-            }
-        }
-    },
-    "nxCloudAccessToken": "",
     "nxCloudId": "6919efd2d9db341741580d62"
 }

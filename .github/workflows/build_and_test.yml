@@ -24,7 +24,8 @@ on:
 
 env:
     CI: true
-    NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+    # Use read-write token for protected branches, read-only for PRs
+    NX_CLOUD_ACCESS_TOKEN: ${{ github.event_name == 'pull_request' && secrets.NX_CLOUD_ACCESS_TOKEN_READ_ONLY || secrets.NX_CLOUD_ACCESS_TOKEN }}
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -75,9 +76,8 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: .nx/cache
-                  key: ${{ runner.os }}-nx-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+                  key: ${{ runner.os }}-nx-${{ github.sha }}
                   restore-keys: |
-                      ${{ runner.os }}-nx-${{ hashFiles('pnpm-lock.yaml') }}-
                       ${{ runner.os }}-nx-
 
             - name: Install dependencies
@@ -94,10 +94,11 @@ jobs:
 
             - name: Build affected packages
               run: |
+                  # Nx Cloud will cache and distribute task results across CI runs
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    pnpm nx affected -t build --base=origin/${{ github.base_ref }} --head=HEAD --parallel=3
+                    pnpm nx affected -t build --base=origin/${{ github.base_ref }} --head=HEAD --parallel=5
                   else
-                    pnpm nx run-many -t build --parallel=3
+                    pnpm nx run-many -t build --parallel=5
                   fi
 
             - name: Upload build artifacts
@@ -156,9 +157,8 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: .nx/cache
-                  key: ${{ runner.os }}-nx-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+                  key: ${{ runner.os }}-nx-${{ github.sha }}
                   restore-keys: |
-                      ${{ runner.os }}-nx-${{ hashFiles('pnpm-lock.yaml') }}-
                       ${{ runner.os }}-nx-
 
             - name: Install dependencies
@@ -186,9 +186,9 @@ jobs:
             - name: Run affected unit tests
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    pnpm nx affected -t test --base=origin/${{ github.base_ref }} --head=HEAD --parallel=3
+                    pnpm nx affected -t test --base=origin/${{ github.base_ref }} --head=HEAD --parallel=5
                   else
-                    pnpm nx run-many -t test --parallel=3
+                    pnpm nx run-many -t test --parallel=5
                   fi
 
     e2e-tests:
@@ -260,9 +260,8 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: .nx/cache
-                  key: ${{ runner.os }}-nx-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+                  key: ${{ runner.os }}-nx-${{ github.sha }}
                   restore-keys: |
-                      ${{ runner.os }}-nx-${{ hashFiles('pnpm-lock.yaml') }}-
                       ${{ runner.os }}-nx-
 
             - name: Install dependencies
@@ -290,7 +289,7 @@ jobs:
                   DB: ${{ matrix.db }}
               run: |
                   if [ "${{ github.event_name }}" == "pull_request" ]; then
-                    pnpm nx affected -t e2e --base=origin/${{ github.base_ref }} --head=HEAD --parallel=2
+                    pnpm nx affected -t e2e --base=origin/${{ github.base_ref }} --head=HEAD --parallel=3
                   else
-                    pnpm nx run-many -t e2e --parallel=2
+                    pnpm nx run-many -t e2e --parallel=3
                   fi
