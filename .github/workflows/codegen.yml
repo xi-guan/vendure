@@ -48,9 +48,7 @@ jobs:
                       ${{ runner.os }}-nx-codegen-
 
             - name: Install dependencies
-              run: pnpm install --frozen-lockfile
-              env:
-                  PNPM_IGNORE_SCRIPTS: false
+              run: pnpm install --frozen-lockfile --config.ignore-scripts=false
 
             - name: Build core and common packages
               run: |

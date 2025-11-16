@@ -81,9 +81,7 @@ jobs:
                       ${{ runner.os }}-nx-
 
             - name: Install dependencies
-              run: pnpm install --frozen-lockfile
-              env:
-                  PNPM_IGNORE_SCRIPTS: false
+              run: pnpm install --frozen-lockfile --config.ignore-scripts=false
 
             - name: Build affected packages
               run: |
@@ -140,9 +138,7 @@ jobs:
                       ${{ runner.os }}-nx-
 
             - name: Install dependencies
-              run: pnpm install --frozen-lockfile
-              env:
-                  PNPM_IGNORE_SCRIPTS: false
+              run: pnpm install --frozen-lockfile --config.ignore-scripts=false
 
             - name: Build affected packages
               run: |
@@ -234,9 +230,7 @@ jobs:
                       ${{ runner.os }}-nx-
 
             - name: Install dependencies
-              run: pnpm install --frozen-lockfile
-              env:
-                  PNPM_IGNORE_SCRIPTS: false
+              run: pnpm install --frozen-lockfile --config.ignore-scripts=false
 
             - name: Build affected packages
               run: |
