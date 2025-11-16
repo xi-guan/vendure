@@ -82,9 +82,8 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
-
-            - name: Rebuild native modules
-              run: pnpm rebuild bcrypt sharp better-sqlite3 sqlite3 || true
+              env:
+                  PNPM_IGNORE_SCRIPTS: false
 
             - name: Build affected packages
               run: |
@@ -142,9 +141,8 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
-
-            - name: Rebuild native modules
-              run: pnpm rebuild bcrypt sharp better-sqlite3 sqlite3 || true
+              env:
+                  PNPM_IGNORE_SCRIPTS: false
 
             - name: Build affected packages
               run: |
@@ -237,9 +235,8 @@ jobs:
 
             - name: Install dependencies
               run: pnpm install --frozen-lockfile
-
-            - name: Rebuild native modules
-              run: pnpm rebuild bcrypt sharp better-sqlite3 sqlite3 || true
+              env:
+                  PNPM_IGNORE_SCRIPTS: false
 
             - name: Build affected packages
               run: |
