@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 .bulk-actions {
     margin-inline-start: calc(var(--space-unit) * 6);

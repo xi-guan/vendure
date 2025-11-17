@@ -1,5 +1,5 @@
-@import "variables";
-@import "../order-table/order-table-mixin";
+@use 'variables' as *;
+@use "../order-table/order-table-mixin" as *;
 
 
 :host {

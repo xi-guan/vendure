@@ -1,7 +1,7 @@
-@import '../../core/src/shared/components/card/card.component';
-@import '../../core/src/shared/components/form-field/form-field.component';
-@import '../../core/src/shared/components/action-bar/action-bar.component.scss';
-@import '../../core/src/shared/components/page-detail-layout/page-detail-layout.component';
+@use '../../core/src/shared/components/card/card.component' as *;
+@use '../../core/src/shared/components/form-field/form-field.component' as *;
+@use '../../core/src/shared/components/action-bar/action-bar.component.scss' as *;
+@use '../../core/src/shared/components/page-detail-layout/page-detail-layout.component' as *;
 
 .form-group .input-row.invalid {
     input:not([type='checkbox']):not([type='radio']),

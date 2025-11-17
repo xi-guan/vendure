@@ -1,4 +1,4 @@
-@import "../order-table/order-table-mixin";
+@use "../order-table/order-table-mixin" as *;
 
 .order-table {
     @include order-table;

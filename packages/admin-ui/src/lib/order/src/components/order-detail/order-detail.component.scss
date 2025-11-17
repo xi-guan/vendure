@@ -1,5 +1,5 @@
-@import "mixins";
-@import "../order-table/order-table-mixin";
+@use 'mixins' as *;
+@use "../order-table/order-table-mixin" as *;
 
 .shipping-address {
     list-style-type: none;

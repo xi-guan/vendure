@@ -1,13 +1,13 @@
 // This file is used to compile the theme.min.css file which can be used
 // by ui extensions to get the same styles as the main app.
 
-@import "global/sass-overrides";
-@import "global/clarity";
-@import "global/buttons";
-@import "global/forms";
-@import "global/overrides";
-@import "global/utilities";
-@import "fonts";
-@import "global/global";
-@import 'theme/default';
-@import 'theme/dark';
+@use "global/sass-overrides" as *;
+@use "global/clarity" as *;
+@use "global/buttons" as *;
+@use "global/forms" as *;
+@use "global/overrides" as *;
+@use "global/utilities" as *;
+@use "fonts" as *;
+@use "global/global" as *;
+@use 'theme/default' as *;
+@use 'theme/dark' as *;

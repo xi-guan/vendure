@@ -1,4 +1,4 @@
-@import './base-code-editor';
+@use './base-code-editor' as *;
 
 @include code-editor;
 

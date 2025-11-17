@@ -1,4 +1,4 @@
-@import "mixins";
+@use 'mixins' as *;
 
 :host {
     margin-top: 6px;

@@ -1,19 +1,19 @@
-@import "global/sass-overrides";
-@import "global/clarity";
+// All @use statements must come first
+@use "global/sass-overrides" as *;
+@use "global/clarity" as *;
+@use "global/buttons" as *;
+@use "global/forms" as *;
+@use "global/overrides" as *;
+@use "global/utilities" as *;
+@use "fonts" as *;
+@use "global/global" as *;
+@use "component/prosemirror" as *;
+@use 'theme/default' as *;
+@use 'theme/dark' as *;
+@use "rtl" as *;
+
+// CSS @import statements come after @use
 @import "@cds/core/global.min.css";
 @import "@clr/icons/clr-icons.min.css";
 @import "@ng-select/ng-select/themes/default.theme.css";
 @import '@angular/cdk/overlay-prebuilt.css';
-@import "global/buttons";
-@import "global/forms";
-@import "global/overrides";
-@import "global/utilities";
-@import "fonts";
-@import "global/global";
-
-@import "component/prosemirror";
-
-@import 'theme/default';
-@import 'theme/dark';
-
-@import "rtl";

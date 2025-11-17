@@ -1,6 +1,6 @@
-@import 'variables';
-@import 'forms';
-@import 'mixins';
+@use 'variables' as *;
+@use 'forms' as *;
+@use 'mixins' as *;
 
 .main-container {
     background-color: var(--clr-global-app-background);
