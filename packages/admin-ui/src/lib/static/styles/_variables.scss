@@ -1,4 +1,4 @@
-@import "./global/sass-overrides";
+@use "./global/sass-overrides" as *;
 @import "@clr/ui/src/utils/_mixins";
 @import "@clr/ui/src/utils/_variables.clarity.scss";
 

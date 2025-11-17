@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables' as *;
 
 :host {
     background-color: var(--clr-nav-background-color);
