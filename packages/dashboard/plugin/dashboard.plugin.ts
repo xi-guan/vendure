@@ -1,5 +1,5 @@
-import { MiddlewareConsumer, NestModule } from '@nestjs/common';
-import { Type } from '@vendure/common/lib/shared-types';
+import { MiddlewareConsumer, NestModule } from '@nestjs/common'
+import { Type } from '@vendure/common/lib/shared-types'
 import {
     createProxyHandler,
     Logger,
@@ -8,17 +8,17 @@ import {
     registerPluginStartupMessage,
     SettingsStoreScopes,
     VendurePlugin,
-} from '@vendure/core';
-import express from 'express';
-import { rateLimit } from 'express-rate-limit';
-import * as fs from 'node:fs';
-import * as http from 'node:http';
-import * as path from 'node:path';
+} from '@vendure/core'
+import express from 'express'
+import { rateLimit } from 'express-rate-limit'
+import * as fs from 'node:fs'
+import * as http from 'node:http'
+import * as path from 'node:path'
 
-import { adminApiExtensions } from './api/api-extensions.js';
-import { MetricsResolver } from './api/metrics.resolver.js';
-import { loggerCtx, manageDashboardGlobalViews } from './constants.js';
-import { MetricsService } from './service/metrics.service.js';
+import { adminApiExtensions } from './api/api-extensions.js'
+import { MetricsResolver } from './api/metrics.resolver.js'
+import { loggerCtx, manageDashboardGlobalViews } from './constants.js'
+import { MetricsService } from './service/metrics.service.js'
 
 /**
  * @description
@@ -33,12 +33,12 @@ export interface DashboardPluginOptions {
      *
      * @default 'dashboard'
      */
-    route: string;
+    route: string
     /**
      * @description
      * The path to the dashboard UI app dist directory.
      */
-    appDir: string;
+    appDir: string
     /**
      * @description
      * The port on which to check for a running Vite dev server.
@@ -47,7 +47,7 @@ export interface DashboardPluginOptions {
      *
      * @default 5173
      */
-    viteDevServerPort?: number;
+    viteDevServerPort?: number
 }
 
 /**
@@ -124,7 +124,7 @@ export interface DashboardPluginOptions {
     },
     providers: [MetricsService],
     configuration: config => {
-        config.authOptions.customPermissions.push(manageDashboardGlobalViews);
+        config.authOptions.customPermissions.push(manageDashboardGlobalViews)
 
         config.settingsStoreFields['vendure.dashboard'] = [
             {
@@ -143,13 +143,13 @@ export interface DashboardPluginOptions {
                 name: 'userSavedViews',
                 scope: SettingsStoreScopes.user,
             },
-        ];
-        return config;
+        ]
+        return config
     },
     compatibility: '^3.0.0',
 })
 export class DashboardPlugin implements NestModule {
-    private static options: DashboardPluginOptions | undefined;
+    private static options: DashboardPluginOptions | undefined
 
     constructor(private readonly processContext: ProcessContext) {}
 
@@ -158,28 +158,28 @@ export class DashboardPlugin implements NestModule {
      * Set the plugin options
      */
     static init(options: DashboardPluginOptions): Type<DashboardPlugin> {
-        this.options = options;
-        return DashboardPlugin;
+        this.options = options
+        return DashboardPlugin
     }
 
     configure(consumer: MiddlewareConsumer) {
         if (this.processContext.isWorker) {
-            return;
+            return
         }
         if (!DashboardPlugin.options) {
             Logger.warn(
                 `DashboardPlugin's init() method was not called. The Dashboard UI will not be served.`,
                 loggerCtx,
-            );
-            return;
+            )
+            return
         }
-        const { route, appDir, viteDevServerPort = 5173 } = DashboardPlugin.options;
+        const { route, appDir, viteDevServerPort = 5173 } = DashboardPlugin.options
 
-        Logger.verbose('Creating dashboard middleware', loggerCtx);
+        Logger.verbose('Creating dashboard middleware', loggerCtx)
 
-        consumer.apply(this.createDynamicHandler(route, appDir, viteDevServerPort)).forRoutes(route);
+        consumer.apply(this.createDynamicHandler(route, appDir, viteDevServerPort)).forRoutes(route)
 
-        registerPluginStartupMessage('Dashboard UI', route);
+        registerPluginStartupMessage('Dashboard UI', route)
     }
 
     private createStaticServer(dashboardPath: string) {
@@ -188,16 +188,16 @@ export class DashboardPlugin implements NestModule {
             limit: process.env.NODE_ENV === 'production' ? 500 : 10_000,
             standardHeaders: true,
             legacyHeaders: false,
-        });
+        })
 
-        const dashboardServer = express.Router();
-        dashboardServer.use(limiter);
-        dashboardServer.use(express.static(dashboardPath));
+        const dashboardServer = express.Router()
+        dashboardServer.use(limiter)
+        dashboardServer.use(express.static(dashboardPath))
         dashboardServer.use((req, res) => {
-            res.sendFile('index.html', { root: dashboardPath });
-        });
+            res.sendFile('index.html', { root: dashboardPath })
+        })
 
-        return dashboardServer;
+        return dashboardServer
     }
 
     private async checkViteDevServer(port: number): Promise<boolean> {
@@ -211,29 +211,29 @@ export class DashboardPlugin implements NestModule {
                     timeout: 1000,
                 },
                 (res: http.IncomingMessage) => {
-                    resolve(res.statusCode !== undefined && res.statusCode < 400);
+                    resolve(res.statusCode !== undefined && res.statusCode < 400)
                 },
-            );
+            )
 
             req.on('error', () => {
-                resolve(false);
-            });
+                resolve(false)
+            })
 
             req.on('timeout', () => {
-                req.destroy();
-                resolve(false);
-            });
+                req.destroy()
+                resolve(false)
+            })
 
-            req.end();
-        });
+            req.end()
+        })
     }
 
     private checkBuiltFiles(appDir: string): boolean {
         try {
-            const indexPath = path.join(appDir, 'index.html');
-            return fs.existsSync(indexPath);
+            const indexPath = path.join(appDir, 'index.html')
+            return fs.existsSync(indexPath)
         } catch {
-            return false;
+            return false
         }
     }
 
@@ -243,25 +243,25 @@ export class DashboardPlugin implements NestModule {
             limit: process.env.NODE_ENV === 'production' ? 500 : 20_000,
             standardHeaders: true,
             legacyHeaders: false,
-        });
+        })
 
-        const defaultPageServer = express.Router();
-        defaultPageServer.use(limiter);
+        const defaultPageServer = express.Router()
+        defaultPageServer.use(limiter)
 
         defaultPageServer.use((req, res) => {
             try {
-                const htmlPath = path.join(__dirname, 'default-page.html');
-                const defaultHtml = fs.readFileSync(htmlPath, 'utf8');
-                res.setHeader('Content-Type', 'text/html');
-                res.send(defaultHtml);
+                const htmlPath = path.join(__dirname, 'default-page.html')
+                const defaultHtml = fs.readFileSync(htmlPath, 'utf8')
+                res.setHeader('Content-Type', 'text/html')
+                res.send(defaultHtml)
             } catch (error) {
                 res.status(500).send(
                     `Unable to load default page: ${error instanceof Error ? error.message : String(error)}`,
-                );
+                )
             }
-        });
+        })
 
-        return defaultPageServer;
+        return defaultPageServer
     }
 
     private createDynamicHandler(route: string, appDir: string, viteDevServerPort: number) {
@@ -270,7 +270,7 @@ export class DashboardPlugin implements NestModule {
             limit: process.env.NODE_ENV === 'production' ? 500 : 2000,
             standardHeaders: true,
             legacyHeaders: false,
-        });
+        })
 
         // Pre-create handlers to avoid recreating them on each request
         const proxyHandler = createProxyHandler({
@@ -278,61 +278,61 @@ export class DashboardPlugin implements NestModule {
             route,
             port: viteDevServerPort,
             basePath: route,
-        });
+        })
 
-        const staticServer = this.createStaticServer(appDir);
-        const defaultPage = this.createDefaultPage();
+        const staticServer = this.createStaticServer(appDir)
+        const defaultPage = this.createDefaultPage()
 
         // Track current mode to log changes
-        let currentMode: 'vite' | 'built' | 'default' | null = null;
+        let currentMode: 'vite' | 'built' | 'default' | null = null
 
-        const dynamicRouter = express.Router();
-        dynamicRouter.use(limiter);
+        const dynamicRouter = express.Router()
+        dynamicRouter.use(limiter)
 
         // Add status endpoint for polling (localhost only for security)
         dynamicRouter.get(
             '/__status',
             (req, res, next) => {
-                const clientIp = req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
+                const clientIp = req.ip || req.connection.remoteAddress || req.socket.remoteAddress
                 const isLocalhost =
                     clientIp === '127.0.0.1' ||
                     clientIp === '::1' ||
                     clientIp === '::ffff:127.0.0.1' ||
-                    clientIp === 'localhost';
+                    clientIp === 'localhost'
 
                 if (!isLocalhost) {
-                    return res.status(403).json({ error: 'Access denied' });
+                    return res.status(403).json({ error: 'Access denied' })
                 }
 
-                next();
+                next()
             },
             async (req, res) => {
                 try {
-                    const isViteRunning = await this.checkViteDevServer(viteDevServerPort);
-                    const hasBuiltFiles = this.checkBuiltFiles(appDir);
-                    const mode = isViteRunning ? 'vite' : hasBuiltFiles ? 'built' : 'default';
+                    const isViteRunning = await this.checkViteDevServer(viteDevServerPort)
+                    const hasBuiltFiles = this.checkBuiltFiles(appDir)
+                    const mode = isViteRunning ? 'vite' : hasBuiltFiles ? 'built' : 'default'
                     res.json({
                         viteRunning: isViteRunning,
                         hasBuiltFiles,
                         mode,
-                    });
+                    })
                 } catch (error) {
                     res.status(500).json({
                         error: `Status check failed: ${error instanceof Error ? error.message : String(error)}`,
-                    });
+                    })
                 }
             },
-        );
+        )
 
         dynamicRouter.use(async (req, res, next) => {
             try {
                 // Check for Vite dev server first (highest priority)
-                const isViteRunning = await this.checkViteDevServer(viteDevServerPort);
-                const hasBuiltFiles = this.checkBuiltFiles(appDir);
+                const isViteRunning = await this.checkViteDevServer(viteDevServerPort)
+                const hasBuiltFiles = this.checkBuiltFiles(appDir)
 
                 // Determine new mode
-                const staticMode = hasBuiltFiles ? 'built' : 'default';
-                const newMode: 'vite' | 'built' | 'default' = isViteRunning ? 'vite' : staticMode;
+                const staticMode = hasBuiltFiles ? 'built' : 'default'
+                const newMode: 'vite' | 'built' | 'default' = isViteRunning ? 'vite' : staticMode
 
                 // Log mode change
                 if (currentMode !== newMode) {
@@ -340,34 +340,35 @@ export class DashboardPlugin implements NestModule {
                         vite: 'Vite dev server (with HMR)',
                         built: 'built static files',
                         default: 'default getting-started page',
-                    };
+                    }
 
                     if (currentMode !== null) {
                         Logger.info(
                             `Dashboard mode changed: ${currentMode} → ${newMode} (serving ${modeDescriptions[newMode]})`,
                             loggerCtx,
-                        );
+                        )
                     }
-                    currentMode = newMode;
+                    currentMode = newMode
                 }
 
                 // Route to appropriate handler
                 if (isViteRunning) {
-                    return proxyHandler(req, res, next);
+                    // @ts-expect-error - Type mismatch between express type versions in dependency tree
+                    return proxyHandler(req, res, next)
                 }
 
                 if (hasBuiltFiles) {
-                    return staticServer(req, res, next);
+                    return staticServer(req, res, next)
                 }
 
                 // Fall back to default page
-                return defaultPage(req, res, next);
+                return defaultPage(req, res, next)
             } catch (error) {
-                Logger.error(`Dashboard dynamic handler error: ${String(error)}`, loggerCtx);
-                res.status(500).send('Dashboard unavailable');
+                Logger.error(`Dashboard dynamic handler error: ${String(error)}`, loggerCtx)
+                res.status(500).send('Dashboard unavailable')
             }
-        });
+        })
 
-        return dynamicRouter;
+        return dynamicRouter
     }
 }
