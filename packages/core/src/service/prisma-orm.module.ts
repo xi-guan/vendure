@@ -10,6 +10,45 @@ import { Module } from '@nestjs/common';
 
 import { PrismaService } from '../connection/prisma.service';
 
+// Prisma Repositories
+import {
+    AddressPrismaRepository,
+    AdministratorPrismaRepository,
+    AssetPrismaRepository,
+    AssetTagPrismaRepository,
+    ChannelPrismaRepository,
+    CollectionPrismaRepository,
+    CountryPrismaRepository,
+    CustomerGroupPrismaRepository,
+    CustomerPrismaRepository,
+    FacetPrismaRepository,
+    FacetValuePrismaRepository,
+    FulfillmentPrismaRepository,
+    GlobalSettingsPrismaRepository,
+    OrderLinePrismaRepository,
+    OrderPrismaRepository,
+    PaymentPrismaRepository,
+    ProductOptionGroupPrismaRepository,
+    ProductOptionPrismaRepository,
+    ProductPrismaRepository,
+    ProductVariantPrismaRepository,
+    PromotionPrismaRepository,
+    RefundPrismaRepository,
+    RegionPrismaRepository,
+    RolePrismaRepository,
+    SessionPrismaRepository,
+    ShippingLinePrismaRepository,
+    ShippingMethodPrismaRepository,
+    StockLevelPrismaRepository,
+    StockLocationPrismaRepository,
+    StockMovementPrismaRepository,
+    SurchargePrismaRepository,
+    TaxCategoryPrismaRepository,
+    TaxRatePrismaRepository,
+    UserPrismaRepository,
+    ZonePrismaRepository,
+} from './repositories/prisma';
+
 // Prisma Adapters
 import { AddressPrismaAdapter } from './adapters/address-prisma.adapter';
 import { AdministratorPrismaAdapter } from './adapters/administrator-prisma.adapter';
@@ -24,12 +63,12 @@ import { FacetPrismaAdapter } from './adapters/facet-prisma.adapter';
 import { FacetValuePrismaAdapter } from './adapters/facet-value-prisma.adapter';
 import { FulfillmentPrismaAdapter } from './adapters/fulfillment-prisma.adapter';
 import { GlobalSettingsPrismaAdapter } from './adapters/global-settings-prisma.adapter';
-import { OrderPrismaAdapter } from './adapters/order-prisma.adapter';
 import { OrderLinePrismaAdapter } from './adapters/order-line-prisma.adapter';
+import { OrderPrismaAdapter } from './adapters/order-prisma.adapter';
 import { PaymentPrismaAdapter } from './adapters/payment-prisma.adapter';
-import { ProductPrismaAdapter } from './adapters/product-prisma.adapter';
-import { ProductOptionPrismaAdapter } from './adapters/product-option-prisma.adapter';
 import { ProductOptionGroupPrismaAdapter } from './adapters/product-option-group-prisma.adapter';
+import { ProductOptionPrismaAdapter } from './adapters/product-option-prisma.adapter';
+import { ProductPrismaAdapter } from './adapters/product-prisma.adapter';
 import { ProductVariantPrismaAdapter } from './adapters/product-variant-prisma.adapter';
 import { PromotionPrismaAdapter } from './adapters/promotion-prisma.adapter';
 import { RefundPrismaAdapter } from './adapters/refund-prisma.adapter';
@@ -50,23 +89,23 @@ import { ZonePrismaAdapter } from './adapters/zone-prisma.adapter';
 // TypeORM Adapters
 import { AddressTypeOrmAdapter } from './adapters/address-typeorm.adapter';
 import { AdministratorTypeOrmAdapter } from './adapters/administrator-typeorm.adapter';
-import { AssetTypeOrmAdapter } from './adapters/asset-typeorm.adapter';
 import { AssetTagTypeOrmAdapter } from './adapters/asset-tag-typeorm.adapter';
+import { AssetTypeOrmAdapter } from './adapters/asset-typeorm.adapter';
 import { ChannelTypeOrmAdapter } from './adapters/channel-typeorm.adapter';
 import { CollectionTypeOrmAdapter } from './adapters/collection-typeorm.adapter';
 import { CountryTypeOrmAdapter } from './adapters/country-typeorm.adapter';
-import { CustomerTypeOrmAdapter } from './adapters/customer-typeorm.adapter';
 import { CustomerGroupTypeOrmAdapter } from './adapters/customer-group-typeorm.adapter';
+import { CustomerTypeOrmAdapter } from './adapters/customer-typeorm.adapter';
 import { FacetTypeOrmAdapter } from './adapters/facet-typeorm.adapter';
 import { FacetValueTypeOrmAdapter } from './adapters/facet-value-typeorm.adapter';
 import { FulfillmentTypeOrmAdapter } from './adapters/fulfillment-typeorm.adapter';
 import { GlobalSettingsTypeOrmAdapter } from './adapters/global-settings-typeorm.adapter';
-import { OrderTypeOrmAdapter } from './adapters/order-typeorm.adapter';
 import { OrderLineTypeOrmAdapter } from './adapters/order-line-typeorm.adapter';
+import { OrderTypeOrmAdapter } from './adapters/order-typeorm.adapter';
 import { PaymentTypeOrmAdapter } from './adapters/payment-typeorm.adapter';
-import { ProductTypeOrmAdapter } from './adapters/product-typeorm.adapter';
-import { ProductOptionTypeOrmAdapter } from './adapters/product-option-typeorm.adapter';
 import { ProductOptionGroupTypeOrmAdapter } from './adapters/product-option-group-typeorm.adapter';
+import { ProductOptionTypeOrmAdapter } from './adapters/product-option-typeorm.adapter';
+import { ProductTypeOrmAdapter } from './adapters/product-typeorm.adapter';
 import { ProductVariantTypeOrmAdapter } from './adapters/product-variant-typeorm.adapter';
 import { PromotionTypeOrmAdapter } from './adapters/promotion-typeorm.adapter';
 import { RefundTypeOrmAdapter } from './adapters/refund-typeorm.adapter';
@@ -86,6 +125,44 @@ import { ZoneTypeOrmAdapter } from './adapters/zone-typeorm.adapter';
 
 import { OrmAdapterFactory } from './adapters/orm-adapter.factory';
 import { PrismaConfigService } from './config/prisma-config.service';
+
+const prismaRepositories = [
+    AddressPrismaRepository,
+    AdministratorPrismaRepository,
+    AssetPrismaRepository,
+    AssetTagPrismaRepository,
+    ChannelPrismaRepository,
+    CollectionPrismaRepository,
+    CountryPrismaRepository,
+    CustomerPrismaRepository,
+    CustomerGroupPrismaRepository,
+    FacetPrismaRepository,
+    FacetValuePrismaRepository,
+    FulfillmentPrismaRepository,
+    GlobalSettingsPrismaRepository,
+    OrderPrismaRepository,
+    OrderLinePrismaRepository,
+    PaymentPrismaRepository,
+    ProductPrismaRepository,
+    ProductOptionPrismaRepository,
+    ProductOptionGroupPrismaRepository,
+    ProductVariantPrismaRepository,
+    PromotionPrismaRepository,
+    RefundPrismaRepository,
+    RegionPrismaRepository,
+    RolePrismaRepository,
+    SessionPrismaRepository,
+    ShippingLinePrismaRepository,
+    ShippingMethodPrismaRepository,
+    StockLevelPrismaRepository,
+    StockLocationPrismaRepository,
+    StockMovementPrismaRepository,
+    SurchargePrismaRepository,
+    TaxCategoryPrismaRepository,
+    TaxRatePrismaRepository,
+    UserPrismaRepository,
+    ZonePrismaRepository,
+];
 
 const prismaAdapters = [
     AddressPrismaAdapter,
@@ -167,6 +244,7 @@ const typeormAdapters = [
     providers: [
         PrismaService,
         PrismaConfigService,
+        ...prismaRepositories,
         ...prismaAdapters,
         ...typeormAdapters,
         OrmAdapterFactory,
@@ -174,6 +252,7 @@ const typeormAdapters = [
     exports: [
         PrismaService,
         PrismaConfigService,
+        ...prismaRepositories,
         ...prismaAdapters,
         ...typeormAdapters,
         OrmAdapterFactory,
