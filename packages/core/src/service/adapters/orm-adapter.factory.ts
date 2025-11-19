@@ -86,6 +86,43 @@ import { UserPrismaAdapter } from './user-prisma.adapter';
 import { IZoneOrmAdapter } from './zone-orm.adapter';
 import { ZonePrismaAdapter } from './zone-prisma.adapter';
 
+// TypeORM Adapters
+import { AddressTypeOrmAdapter } from './address-typeorm.adapter';
+import { AdministratorTypeOrmAdapter } from './administrator-typeorm.adapter';
+import { AssetTypeOrmAdapter } from './asset-typeorm.adapter';
+import { AssetTagTypeOrmAdapter } from './asset-tag-typeorm.adapter';
+import { ChannelTypeOrmAdapter } from './channel-typeorm.adapter';
+import { CollectionTypeOrmAdapter } from './collection-typeorm.adapter';
+import { CountryTypeOrmAdapter } from './country-typeorm.adapter';
+import { CustomerTypeOrmAdapter } from './customer-typeorm.adapter';
+import { CustomerGroupTypeOrmAdapter } from './customer-group-typeorm.adapter';
+import { FacetTypeOrmAdapter } from './facet-typeorm.adapter';
+import { FacetValueTypeOrmAdapter } from './facet-value-typeorm.adapter';
+import { FulfillmentTypeOrmAdapter } from './fulfillment-typeorm.adapter';
+import { GlobalSettingsTypeOrmAdapter } from './global-settings-typeorm.adapter';
+import { OrderTypeOrmAdapter } from './order-typeorm.adapter';
+import { OrderLineTypeOrmAdapter } from './order-line-typeorm.adapter';
+import { PaymentTypeOrmAdapter } from './payment-typeorm.adapter';
+import { ProductTypeOrmAdapter } from './product-typeorm.adapter';
+import { ProductOptionTypeOrmAdapter } from './product-option-typeorm.adapter';
+import { ProductOptionGroupTypeOrmAdapter } from './product-option-group-typeorm.adapter';
+import { ProductVariantTypeOrmAdapter } from './product-variant-typeorm.adapter';
+import { PromotionTypeOrmAdapter } from './promotion-typeorm.adapter';
+import { RefundTypeOrmAdapter } from './refund-typeorm.adapter';
+import { RegionTypeOrmAdapter } from './region-typeorm.adapter';
+import { RoleTypeOrmAdapter } from './role-typeorm.adapter';
+import { SessionTypeOrmAdapter } from './session-typeorm.adapter';
+import { ShippingLineTypeOrmAdapter } from './shipping-line-typeorm.adapter';
+import { ShippingMethodTypeOrmAdapter } from './shipping-method-typeorm.adapter';
+import { StockLevelTypeOrmAdapter } from './stock-level-typeorm.adapter';
+import { StockLocationTypeOrmAdapter } from './stock-location-typeorm.adapter';
+import { StockMovementTypeOrmAdapter } from './stock-movement-typeorm.adapter';
+import { SurchargeTypeOrmAdapter } from './surcharge-typeorm.adapter';
+import { TaxCategoryTypeOrmAdapter } from './tax-category-typeorm.adapter';
+import { TaxRateTypeOrmAdapter } from './tax-rate-typeorm.adapter';
+import { UserTypeOrmAdapter } from './user-typeorm.adapter';
+import { ZoneTypeOrmAdapter } from './zone-typeorm.adapter';
+
 /**
  * Factory for creating ORM adapters
  *
@@ -154,6 +191,42 @@ export class OrmAdapterFactory {
         private readonly stockMovementPrismaAdapter: StockMovementPrismaAdapter,
         // Settings
         private readonly globalSettingsPrismaAdapter: GlobalSettingsPrismaAdapter,
+        // TypeORM Adapters
+        private readonly addressTypeOrmAdapter: AddressTypeOrmAdapter,
+        private readonly administratorTypeOrmAdapter: AdministratorTypeOrmAdapter,
+        private readonly assetTypeOrmAdapter: AssetTypeOrmAdapter,
+        private readonly assetTagTypeOrmAdapter: AssetTagTypeOrmAdapter,
+        private readonly channelTypeOrmAdapter: ChannelTypeOrmAdapter,
+        private readonly collectionTypeOrmAdapter: CollectionTypeOrmAdapter,
+        private readonly countryTypeOrmAdapter: CountryTypeOrmAdapter,
+        private readonly customerTypeOrmAdapter: CustomerTypeOrmAdapter,
+        private readonly customerGroupTypeOrmAdapter: CustomerGroupTypeOrmAdapter,
+        private readonly facetTypeOrmAdapter: FacetTypeOrmAdapter,
+        private readonly facetValueTypeOrmAdapter: FacetValueTypeOrmAdapter,
+        private readonly fulfillmentTypeOrmAdapter: FulfillmentTypeOrmAdapter,
+        private readonly globalSettingsTypeOrmAdapter: GlobalSettingsTypeOrmAdapter,
+        private readonly orderTypeOrmAdapter: OrderTypeOrmAdapter,
+        private readonly orderLineTypeOrmAdapter: OrderLineTypeOrmAdapter,
+        private readonly paymentTypeOrmAdapter: PaymentTypeOrmAdapter,
+        private readonly productTypeOrmAdapter: ProductTypeOrmAdapter,
+        private readonly productOptionTypeOrmAdapter: ProductOptionTypeOrmAdapter,
+        private readonly productOptionGroupTypeOrmAdapter: ProductOptionGroupTypeOrmAdapter,
+        private readonly productVariantTypeOrmAdapter: ProductVariantTypeOrmAdapter,
+        private readonly promotionTypeOrmAdapter: PromotionTypeOrmAdapter,
+        private readonly refundTypeOrmAdapter: RefundTypeOrmAdapter,
+        private readonly regionTypeOrmAdapter: RegionTypeOrmAdapter,
+        private readonly roleTypeOrmAdapter: RoleTypeOrmAdapter,
+        private readonly sessionTypeOrmAdapter: SessionTypeOrmAdapter,
+        private readonly shippingLineTypeOrmAdapter: ShippingLineTypeOrmAdapter,
+        private readonly shippingMethodTypeOrmAdapter: ShippingMethodTypeOrmAdapter,
+        private readonly stockLevelTypeOrmAdapter: StockLevelTypeOrmAdapter,
+        private readonly stockLocationTypeOrmAdapter: StockLocationTypeOrmAdapter,
+        private readonly stockMovementTypeOrmAdapter: StockMovementTypeOrmAdapter,
+        private readonly surchargeTypeOrmAdapter: SurchargeTypeOrmAdapter,
+        private readonly taxCategoryTypeOrmAdapter: TaxCategoryTypeOrmAdapter,
+        private readonly taxRateTypeOrmAdapter: TaxRateTypeOrmAdapter,
+        private readonly userTypeOrmAdapter: UserTypeOrmAdapter,
+        private readonly zoneTypeOrmAdapter: ZoneTypeOrmAdapter,
     ) {}
 
     // ==================== Core Entity Adapters ====================
@@ -162,21 +235,21 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.addressPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Address');
+        return this.addressTypeOrmAdapter;
     }
 
     getCustomerAdapter(): ICustomerOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.customerPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Customer');
+        return this.customerTypeOrmAdapter;
     }
 
     getCustomerGroupAdapter(): ICustomerGroupOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.customerGroupPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('CustomerGroup');
+        return this.customerGroupTypeOrmAdapter;
     }
 
     // ==================== Product Entity Adapters ====================
@@ -185,35 +258,35 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.productPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Product');
+        return this.productTypeOrmAdapter;
     }
 
     getProductVariantAdapter(): IProductVariantOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.productVariantPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('ProductVariant');
+        return this.productVariantTypeOrmAdapter;
     }
 
     getProductOptionAdapter(): IProductOptionOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.productOptionPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('ProductOption');
+        return this.productOptionTypeOrmAdapter;
     }
 
     getProductOptionGroupAdapter(): IProductOptionGroupOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.productOptionGroupPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('ProductOptionGroup');
+        return this.productOptionGroupTypeOrmAdapter;
     }
 
     getCollectionAdapter(): ICollectionOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.collectionPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Collection');
+        return this.collectionTypeOrmAdapter;
     }
 
     // ==================== Order Entity Adapters ====================
@@ -222,63 +295,63 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.orderPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Order');
+        return this.orderTypeOrmAdapter;
     }
 
     getOrderLineAdapter(): IOrderLineOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.orderLinePrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('OrderLine');
+        return this.orderLineTypeOrmAdapter;
     }
 
     getPaymentAdapter(): IPaymentOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.paymentPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Payment');
+        return this.paymentTypeOrmAdapter;
     }
 
     getRefundAdapter(): IRefundOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.refundPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Refund');
+        return this.refundTypeOrmAdapter;
     }
 
     getFulfillmentAdapter(): IFulfillmentOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.fulfillmentPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Fulfillment');
+        return this.fulfillmentTypeOrmAdapter;
     }
 
     getShippingLineAdapter(): IShippingLineOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.shippingLinePrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('ShippingLine');
+        return this.shippingLineTypeOrmAdapter;
     }
 
     getShippingMethodAdapter(): IShippingMethodOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.shippingMethodPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('ShippingMethod');
+        return this.shippingMethodTypeOrmAdapter;
     }
 
     getPromotionAdapter(): IPromotionOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.promotionPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Promotion');
+        return this.promotionTypeOrmAdapter;
     }
 
     getSurchargeAdapter(): ISurchargeOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.surchargePrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Surcharge');
+        return this.surchargeTypeOrmAdapter;
     }
 
     // ==================== Facet Entity Adapters ====================
@@ -287,14 +360,14 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.facetPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Facet');
+        return this.facetTypeOrmAdapter;
     }
 
     getFacetValueAdapter(): IFacetValueOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.facetValuePrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('FacetValue');
+        return this.facetValueTypeOrmAdapter;
     }
 
     // ==================== Tax Entity Adapters ====================
@@ -303,14 +376,14 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.taxRatePrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('TaxRate');
+        return this.taxRateTypeOrmAdapter;
     }
 
     getTaxCategoryAdapter(): ITaxCategoryOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.taxCategoryPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('TaxCategory');
+        return this.taxCategoryTypeOrmAdapter;
     }
 
     // ==================== Asset Entity Adapters ====================
@@ -319,14 +392,14 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.assetPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Asset');
+        return this.assetTypeOrmAdapter;
     }
 
     getAssetTagAdapter(): IAssetTagOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.assetTagPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('AssetTag');
+        return this.assetTagTypeOrmAdapter;
     }
 
     // ==================== Channel & Region Entity Adapters ====================
@@ -335,28 +408,28 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.channelPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Channel');
+        return this.channelTypeOrmAdapter;
     }
 
     getZoneAdapter(): IZoneOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.zonePrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Zone');
+        return this.zoneTypeOrmAdapter;
     }
 
     getRegionAdapter(): IRegionOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.regionPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Region');
+        return this.regionTypeOrmAdapter;
     }
 
     getCountryAdapter(): ICountryOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.countryPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Country');
+        return this.countryTypeOrmAdapter;
     }
 
     // ==================== User & Auth Entity Adapters ====================
@@ -365,28 +438,28 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.userPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('User');
+        return this.userTypeOrmAdapter;
     }
 
     getRoleAdapter(): IRoleOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.rolePrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Role');
+        return this.roleTypeOrmAdapter;
     }
 
     getAdministratorAdapter(): IAdministratorOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.administratorPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Administrator');
+        return this.administratorTypeOrmAdapter;
     }
 
     getSessionAdapter(): ISessionOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.sessionPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('Session');
+        return this.sessionTypeOrmAdapter;
     }
 
     // ==================== Stock Entity Adapters ====================
@@ -395,21 +468,21 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.stockLevelPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('StockLevel');
+        return this.stockLevelTypeOrmAdapter;
     }
 
     getStockLocationAdapter(): IStockLocationOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.stockLocationPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('StockLocation');
+        return this.stockLocationTypeOrmAdapter;
     }
 
     getStockMovementAdapter(): IStockMovementOrmAdapter {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.stockMovementPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('StockMovement');
+        return this.stockMovementTypeOrmAdapter;
     }
 
     // ==================== Settings ====================
@@ -418,7 +491,7 @@ export class OrmAdapterFactory {
         if (this.prismaConfig.isUsingPrisma()) {
             return this.globalSettingsPrismaAdapter;
         }
-        return this.throwTypeOrmNotImplemented('GlobalSettings');
+        return this.globalSettingsTypeOrmAdapter;
     }
 
     // ==================== Helper Methods ====================
