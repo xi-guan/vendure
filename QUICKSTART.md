@@ -4,7 +4,7 @@
 
 - Node.js >= 18
 - pnpm
-- Docker Desktop for Mac
+- PostgreSQL (本地已安装)
 
 ## 启动步骤
 
@@ -18,20 +18,21 @@ pnpm install
 pnpm build
 ```
 
-### 3. 启动数据库
+### 3. 配置数据库
+确保本地 PostgreSQL 服务已启动，并创建数据库：
 ```bash
-docker-compose up -d mariadb
+createdb vendure-dev
 ```
 
 ### 4. 填充测试数据
 ```bash
 cd packages/dev-server
-pnpm populate
+DB=postgres pnpm populate
 ```
 
 ### 5. 启动开发服务器
 ```bash
-pnpm dev
+DB=postgres pnpm dev
 ```
 
 ## 访问地址
@@ -43,21 +44,3 @@ pnpm dev
 **默认管理员账号:**
 - 用户名: `superadmin`
 - 密码: `superadmin`
-
-## 其他数据库选项
-
-### PostgreSQL
-```bash
-docker-compose up -d postgres_16
-cd packages/dev-server
-DB=postgres pnpm populate
-DB=postgres pnpm dev
-```
-
-### MySQL
-```bash
-docker-compose up -d mysql_8
-cd packages/dev-server
-pnpm populate
-pnpm dev
-```
