@@ -3,19 +3,19 @@
 ## 环境要求
 
 - Node.js >= 18
-- npm
+- pnpm
 - Docker Desktop for Mac
 
 ## 启动步骤
 
 ### 1. 安装依赖
 ```bash
-npm install
+pnpm install
 ```
 
 ### 2. 构建项目
 ```bash
-npm run build
+pnpm build
 ```
 
 ### 3. 启动数据库
@@ -26,12 +26,12 @@ docker-compose up -d mariadb
 ### 4. 填充测试数据
 ```bash
 cd packages/dev-server
-npm run populate
+pnpm populate
 ```
 
 ### 5. 启动开发服务器
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ## 访问地址
@@ -50,14 +50,14 @@ npm run dev
 ```bash
 docker-compose up -d postgres_16
 cd packages/dev-server
-DB=postgres npm run populate
-DB=postgres npm run dev
+DB=postgres pnpm populate
+DB=postgres pnpm dev
 ```
 
 ### MySQL
 ```bash
 docker-compose up -d mysql_8
 cd packages/dev-server
-npm run populate
-npm run dev
+pnpm populate
+pnpm dev
 ```
